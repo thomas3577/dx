@@ -43,8 +43,7 @@ If a deno task with this name exists, it will be executed.
 {
   "tasks" {
     "do": "deno lint && deno fmt"
-  },
-  ...
+  }
 }
 ```
 
