@@ -16,15 +16,15 @@ if (!arg0) {
 const tasks: string[] = await getTasks();
 const filePath: string | undefined = getFilePathByName(arg0);
 
-if (!reserved.includes(arg0)) {
-  if (arg0.endsWith('.ts') || arg0.endsWith('.js') || arg0.endsWith('.tsx') || arg0.endsWith('.jsx')) {
-    args.unshift('run');
-  } else if (tasks.includes(arg0)) {
-    args.unshift('task');
-  } else if (filePath) {
-    args[0] = filePath;
-    args.unshift('run');
-  }
+if (arg0.endsWith('.ts') || arg0.endsWith('.js') || arg0.endsWith('.tsx') || arg0.endsWith('.jsx')) {
+  args.unshift('run');
+} else if (tasks.includes(arg0)) {
+  args.unshift('task');
+} else if (filePath) {
+  args[0] = filePath;
+  args.unshift('run');
+} else if (!reserved.includes(arg0)) {
+  throw new Error(`Unknown command: ${arg0}`);
 }
 
 const code: number = await run(args);
