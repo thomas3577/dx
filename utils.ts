@@ -3,7 +3,10 @@ import { parse } from 'std/flags/mod.ts';
 import { existsSync } from 'std/fs/mod.ts';
 import type { Args } from 'std/flags/mod.ts';
 
-export const extentions: string[] = [
+const denoPath = Deno.execPath();
+const textDecoder = new TextDecoder();
+
+const extentions: string[] = [
   '.ts',
   '.js',
   '.tsx',
@@ -42,43 +45,29 @@ export const getFilePathByName = (value: string): string | undefined =>
     .find((path) => existsSync(path));
 
 export const getTasks = async (): Promise<string[]> => {
-  const path = toFileUrl(join(Deno.cwd(), 'deno.json'));
+  const url: URL = toFileUrl(join(Deno.cwd(), 'deno.json'));
   const importConfig = {
     assert: {
       type: 'json',
     },
   };
 
-  const module = await import(path.href, importConfig);
-  const tasks = Object.keys(module.default.tasks);
+  const module = await import(url.href, importConfig);
+  const tasks: string[] = Object.keys(module.default.tasks);
 
   return tasks;
 };
 
-export const parseArguments = (args: string[]): Args => {
-  // All boolean arguments
-  const booleanArgs = [
-    'help',
-  ];
-
-  // All string arguments
-  const stringArgs = [
-    'test',
-  ];
-
-  // And a list of aliases
-  const alias = {
-    'help': 'h',
-    'test': 't',
-  };
-
-  return parse(args, {
-    alias,
-    boolean: booleanArgs,
-    string: stringArgs,
+export const parseArguments = (args: string[]): Args =>
+  parse(args, {
+    alias: {
+      'help': 'h',
+    },
+    boolean: [
+      'help',
+    ],
     stopEarly: false,
   });
-};
 
 export const printHelp = (): void => {
   console.log(`Usage: dx [COMMAND] [OPTIONS]`);
@@ -92,11 +81,12 @@ export const printHelp = (): void => {
 };
 
 export const run = async (args: string[]): Promise<number> => {
-  const command: Deno.Command = new Deno.Command(Deno.execPath(), {
+  const options: Deno.CommandOptions = {
     args,
-  });
+  };
 
-  const textDecoder = new TextDecoder();
+  const command = new Deno.Command(denoPath, options);
+
   const { code, stdout, stderr } = await command.output();
 
   console.log(textDecoder.decode(stdout));
