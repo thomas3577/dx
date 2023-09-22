@@ -1,9 +1,13 @@
 {
+  "tasks": {
+    "install": "deno install -A -f -n dx --config ./deno.json ./mod.ts",
+    "cache": "deno cache --lock=deno.lock --lock-write ./mod.ts"
+  },
   "compilerOptions": {
     "strict": true
   },
   "imports": {
-    "std/": "https://deno.land/std@0.201.0/"
+    "std/": "https://deno.land/std@0.202.0/"
   },
   "lint": {
     "rules": {

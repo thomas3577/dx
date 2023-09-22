@@ -2,6 +2,7 @@ import { join, toFileUrl } from 'std/path/mod.ts';
 import { parse } from 'std/flags/mod.ts';
 import { existsSync } from 'std/fs/mod.ts';
 import type { Args } from 'std/flags/mod.ts';
+import { VERSION } from './version.ts';
 
 const denoPath = Deno.execPath();
 const textDecoder = new TextDecoder();
@@ -70,6 +71,8 @@ export const parseArguments = (args: string[]): Args =>
   });
 
 export const printHelp = (): void => {
+  console.log(`DX: V${VERSION}`);
+
   console.log(`Usage: dx [COMMAND] [OPTIONS]`);
   console.log('\nCommands:');
   console.log('  test         Runs tests');
