@@ -1,8 +1,13 @@
 import { Args } from 'std/flags/mod.ts';
-import { getFilePathByName, getTasks, parseArguments, printHelp, reserved, run } from './utils.ts';
+import { getFilePathByName, getTasks, parseArguments, printHelp, printVersion, reserved, run } from './utils.ts';
 
 const args: string[] = Deno.args.map((args) => args);
 const parsedArgs: Args = parseArguments(Deno.args);
+
+if (parsedArgs.version) {
+  printVersion();
+  Deno.exit(0);
+}
 
 if (parsedArgs.help) {
   printHelp();

@@ -38,6 +38,7 @@ export const reserved: string[] = [
   'upgrade',
   'vendor',
   'help',
+  'version',
 ];
 
 export const getFilePathByName = (value: string): string | undefined =>
@@ -63,16 +64,25 @@ export const parseArguments = (args: string[]): Args =>
   parse(args, {
     alias: {
       'help': 'h',
+      'version': 'v',
     },
     boolean: [
       'help',
+      'version',
     ],
     stopEarly: false,
   });
 
-export const printHelp = (): void => {
-  console.log(`DX: V${VERSION}`);
+export const printVersion = (): void => {
+  console.log(`Deno version ${Deno.version.deno}`);
+  console.log(`ts version   ${Deno.version.typescript}`);
+  console.log(`V8 version   ${Deno.version.v8}`);
+  console.log(`%cdx version   ${VERSION}`, 'color: green; font-weight: bold');
+};
 
+export const printHelp = (): void => {
+  printVersion();
+  console.log('\n');
   console.log(`Usage: dx [COMMAND] [OPTIONS]`);
   console.log('\nCommands:');
   console.log('  test         Runs tests');
