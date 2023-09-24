@@ -4,7 +4,6 @@ import { existsSync } from 'std/fs/mod.ts';
 import type { Args } from 'std/flags/mod.ts';
 import { VERSION } from './version.ts';
 
-const denoPath = Deno.execPath();
 const textDecoder = new TextDecoder();
 
 const extentions: string[] = [
@@ -94,16 +93,26 @@ export const printHelp = (): void => {
 };
 
 export const run = async (args: string[]): Promise<number> => {
-  const options: Deno.CommandOptions = {
+  const command = new Deno.Command(Deno.execPath(), {
     args,
-  };
+    stdin: 'piped',
+    stdout: 'piped',
+    stderr: 'piped',
+  });
 
-  const command = new Deno.Command(denoPath, options);
+  const child: Deno.ChildProcess = command.spawn();
 
-  const { code, stdout, stderr } = await command.output();
+  for await (const line of child.stdout) {
+    console.log(textDecoder.decode(line));
+  }
 
-  console.log(textDecoder.decode(stdout));
-  console.error(textDecoder.decode(stderr));
+  for await (const line of child.stderr) {
+    console.error(textDecoder.decode(line));
+  }
 
-  return code;
+  // manually close stdin
+  child.stdin.close();
+  const status: Deno.CommandStatus = await child.status;
+
+  return status.code;
 };
