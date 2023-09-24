@@ -110,8 +110,8 @@ export const run = async (args: string[]): Promise<number> => {
     console.error(textDecoder.decode(line));
   }
 
-  // manually close stdin
   child.stdin.close();
+
   const status: Deno.CommandStatus = await child.status;
 
   return status.code;
