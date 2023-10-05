@@ -1,6 +1,6 @@
 import { join, toFileUrl } from 'std/path/mod.ts';
 import { parse } from 'std/flags/mod.ts';
-import { existsSync } from 'std/fs/mod.ts';
+import { exists, existsSync } from 'std/fs/mod.ts';
 import type { Args } from 'std/flags/mod.ts';
 import { VERSION } from './version.ts';
 
@@ -47,15 +47,24 @@ export const getFilePathByName = (value: string): string | undefined =>
 
 export const getTasks = async (): Promise<string[]> => {
   const path = join(Deno.cwd(), 'deno.json');
+
+  const isFile = await exists(path, {
+    isReadable: true,
+    isFile: true,
+  });
+
+  if (!isFile) {
+    return [];
+  }
+
   const url: URL = toFileUrl(path);
-  const importConfig = {
+  const module = await import(url.href, {
     assert: {
       type: 'json',
     },
-  };
+  });
 
-  const module = await import(url.href, importConfig);
-  const tasks: string[] = module.default?.tasks ? Object.keys(module.default.tasks) : [];
+  const tasks: string[] = Object.keys(module.default?.tasks ?? {});
 
   return tasks;
 };
