@@ -46,7 +46,8 @@ export const getFilePathByName = (value: string): string | undefined =>
     .find((path) => existsSync(path));
 
 export const getTasks = async (): Promise<string[]> => {
-  const url: URL = toFileUrl(join(Deno.cwd(), 'deno.json'));
+  const path = join(Deno.cwd(), 'deno.json');
+  const url: URL = toFileUrl(path);
   const importConfig = {
     assert: {
       type: 'json',
@@ -54,7 +55,7 @@ export const getTasks = async (): Promise<string[]> => {
   };
 
   const module = await import(url.href, importConfig);
-  const tasks: string[] = Object.keys(module.default.tasks);
+  const tasks: string[] = module.default?.tasks ? Object.keys(module.default.tasks) : [];
 
   return tasks;
 };
