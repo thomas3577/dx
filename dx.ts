@@ -128,7 +128,9 @@ export const run = async (args: string[]): Promise<number> => {
   return status.code;
 };
 
-export const dx = async (args: string[]): Promise<number> => {
+export const dx = async (args?: string[]): Promise<number> => {
+  args = args ?? [];
+
   const parsedArgs: Args = parseArgs(args);
 
   if (parsedArgs.version) {
