@@ -6,7 +6,7 @@ import { VERSION } from './version.ts';
 
 const textDecoder = new TextDecoder();
 
-const extentions: string[] = [
+export const extensions: string[] = [
   '.ts',
   '.js',
   '.tsx',
@@ -41,7 +41,7 @@ export const reserved: string[] = [
 ];
 
 export const getFilePathByName = (value: string): string | undefined =>
-  extentions
+  extensions
     .map((extention) => [value, extention].join(''))
     .find((path) => existsSync(path));
 
@@ -69,7 +69,7 @@ export const getTasks = async (): Promise<string[]> => {
   return tasks;
 };
 
-export const parseArguments = (args: string[]): Args =>
+export const parseArgs = (args: string[]): Args =>
   parse(args, {
     alias: {
       'help': 'h',
