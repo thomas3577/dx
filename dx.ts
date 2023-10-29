@@ -2,6 +2,7 @@ import { join, toFileUrl } from 'std/path/mod.ts';
 import { parse } from 'std/flags/mod.ts';
 import { exists, existsSync } from 'std/fs/mod.ts';
 import type { Args } from 'std/flags/mod.ts';
+
 import { VERSION } from './version.ts';
 
 const textDecoder = new TextDecoder();
@@ -125,4 +126,42 @@ export const run = async (args: string[]): Promise<number> => {
   const status: Deno.CommandStatus = await child.status;
 
   return status.code;
+};
+
+export const dx = async (args: string[]): Promise<number> => {
+  const parsedArgs: Args = parseArgs(args);
+
+  if (parsedArgs.version) {
+    printVersion();
+    return 0;
+  }
+
+  if (parsedArgs.help) {
+    printHelp();
+    return 0;
+  }
+
+  const arg0: string | null = args.at(0)?.toString() ?? null;
+  if (!arg0) {
+    printHelp();
+    return 0;
+  }
+
+  const tasks: string[] = await getTasks();
+  const filePath: string | undefined = getFilePathByName(arg0);
+
+  if (extensions.some((ext) => arg0.endsWith(ext))) {
+    args.unshift('run');
+  } else if (tasks.includes(arg0)) {
+    args.unshift('task');
+  } else if (filePath) {
+    args[0] = filePath;
+    args.unshift('run');
+  } else if (!reserved.includes(arg0)) {
+    throw new Error(`Unknown command: ${arg0}`);
+  }
+
+  const code: number = await run(args);
+
+  return code;
 };
