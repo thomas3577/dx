@@ -159,6 +159,8 @@ export const dx = async (args?: string[]): Promise<number> => {
   } else if (filePath) {
     args[0] = filePath;
     args.unshift('run');
+  } else if (arg0 === 'update') {
+    args = ['install', '-A', '-f', '-n', 'dx', '--config', './deno.json', './mod.ts'];
   } else if (!reserved.includes(arg0)) {
     throw new Error(`Unknown command: ${arg0}`);
   }
