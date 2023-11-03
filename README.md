@@ -14,7 +14,7 @@ deno install -A -f -n dx --config ./deno.json https://deno.land/x/dx@v1.0.6/mod.
 dx main.ts
 ```
 
-will executes:
+will execute:
 
 ```bash
 deno run main.ts
@@ -26,7 +26,7 @@ deno run main.ts
 dx app
 ```
 
-will executes:
+will execute:
 
 ```bash
 deno run app.ts
@@ -51,10 +51,10 @@ If a deno task with this name exists, it will be executed.
 dx do
 ```
 
-will executes:
+will execute:
 
 ```bash
-deno tasks do
+deno task do
 ```
 
 ### Run Deno Command
@@ -63,7 +63,7 @@ deno tasks do
 dx test
 ```
 
-will executes:
+will execute:
 
 ```bash
 deno test
