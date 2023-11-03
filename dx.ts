@@ -95,6 +95,7 @@ export const printHelp = (): void => {
   console.log('\n');
   console.log(`Usage: dx [COMMAND] [OPTIONS]`);
   console.log('\nCommands:');
+  console.log('  update       Updates dx');
   console.log('  test         Runs tests');
   console.log('  fmt          Runs fmt');
   console.log('  <TOOLS>      Runs tools (https://deno.land/manual/tools)');
@@ -129,7 +130,7 @@ export const run = async (args: string[]): Promise<number> => {
 };
 
 export const dx = async (args?: string[]): Promise<number> => {
-  args = args ?? [];
+  args = [...(args ?? [])];
 
   const parsedArgs: Args = parseArgs(args);
 
@@ -157,7 +158,7 @@ export const dx = async (args?: string[]): Promise<number> => {
   } else if (tasks.includes(arg0)) {
     args.unshift('task');
   } else if (filePath) {
-    args[0] = filePath;
+    args = [filePath];
     args.unshift('run');
   } else if (arg0 === 'update') {
     args = ['install', '-A', '-f', '-n', 'dx', '--config', './deno.json', './mod.ts'];
