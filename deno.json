@@ -1,7 +1,11 @@
 {
   "tasks": {
     "install": "deno install -A -f -n dx --config ./deno.json ./mod.ts",
-    "cache": "deno cache --lock=deno.lock --lock-write ./mod.ts"
+    "cache": "deno cache --lock=deno.lock --lock-write ./mod.ts",
+    "test": "deno test -A --coverage=./coverage",
+    "test:cov": "deno coverage coverage --lcov ./coverage > ./coverage/lcov.info",
+    "test:html": "genhtml -o ./coverage/html ./coverage/lcov.info",
+    "test:all": "deno task test && deno task test:cov && deno task test:html"
   },
   "compilerOptions": {
     "strict": true
