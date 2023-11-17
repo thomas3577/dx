@@ -1,7 +1,7 @@
-import { join, toFileUrl } from 'std/path/mod.ts';
-import { parse } from 'std/flags/mod.ts';
-import { exists, existsSync } from 'std/fs/mod.ts';
-import type { Args } from 'std/flags/mod.ts';
+import { join, toFileUrl } from '$std/path/mod.ts';
+import { parse } from '$std/flags/mod.ts';
+import { exists, existsSync } from '$std/fs/mod.ts';
+import type { Args } from '$std/flags/mod.ts';
 
 import { VERSION } from './version.ts';
 
