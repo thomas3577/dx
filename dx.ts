@@ -1,7 +1,6 @@
 import { join, toFileUrl } from '$std/path/mod.ts';
-import { parse } from '$std/flags/mod.ts';
+import { Args, parseArgs } from '$std/cli/mod.ts';
 import { exists, existsSync } from '$std/fs/mod.ts';
-import type { Args } from '$std/flags/mod.ts';
 
 import { VERSION } from './version.ts';
 
@@ -70,8 +69,8 @@ export const getTasks = async (): Promise<string[]> => {
   return tasks;
 };
 
-export const parseArgs = (args: string[]): Args =>
-  parse(args, {
+export const parseDxArgs = (args: string[]): Args =>
+  parseArgs(args, {
     alias: {
       'help': 'h',
       'version': 'v',
@@ -132,7 +131,7 @@ export const run = async (args: string[]): Promise<number> => {
 export const dx = async (args?: string[]): Promise<number> => {
   args = [...(args ?? [])];
 
-  const parsedArgs: Args = parseArgs(args);
+  const parsedArgs: Args = parseDxArgs(args);
 
   if (parsedArgs.version) {
     printVersion();
