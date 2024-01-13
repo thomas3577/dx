@@ -59,7 +59,7 @@ export const getTasks = async (): Promise<string[]> => {
 
   const url: URL = toFileUrl(path);
   const module = await import(url.href, {
-    assert: {
+    with: {
       type: 'json',
     },
   });
