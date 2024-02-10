@@ -6,14 +6,14 @@ import { VERSION } from './version.ts';
 
 const textDecoder = new TextDecoder();
 
-export const extensions: string[] = [
+const extensions: string[] = [
   '.ts',
   '.js',
   '.tsx',
   '.jsx',
 ];
 
-export const reserved: string[] = [
+const reserved: string[] = [
   'run',
   'bench',
   'bundle',
@@ -40,12 +40,12 @@ export const reserved: string[] = [
   'version',
 ];
 
-export const getFilePathByName = (value: string): string | undefined =>
+const getFilePathByName = (value: string): string | undefined =>
   extensions
     .map((extention) => [value, extention].join(''))
     .find((path) => existsSync(path));
 
-export const getTasks = async (): Promise<string[]> => {
+const getTasks = async (): Promise<string[]> => {
   const path = join(Deno.cwd(), 'deno.json');
 
   const isFile = await exists(path, {
@@ -69,7 +69,7 @@ export const getTasks = async (): Promise<string[]> => {
   return tasks;
 };
 
-export const parseDxArgs = (args: string[]): Args =>
+const parseDxArgs = (args: string[]): Args =>
   parseArgs(args, {
     alias: {
       'help': 'h',
@@ -82,14 +82,14 @@ export const parseDxArgs = (args: string[]): Args =>
     stopEarly: false,
   });
 
-export const printVersion = (): void => {
+const printVersion = (): void => {
   console.log(`Deno version ${Deno.version.deno}`);
   console.log(`ts version   ${Deno.version.typescript}`);
   console.log(`V8 version   ${Deno.version.v8}`);
   console.log(`%cdx version   ${VERSION}`, 'color: green; font-weight: bold');
 };
 
-export const printHelp = (): void => {
+const printHelp = (): void => {
   printVersion();
   console.log('\n');
   console.log(`Usage: dx [COMMAND] [OPTIONS]`);
@@ -103,7 +103,7 @@ export const printHelp = (): void => {
   console.log('\n');
 };
 
-export const run = async (args: string[]): Promise<number> => {
+const run = async (args: string[]): Promise<number> => {
   const command = new Deno.Command(Deno.execPath(), {
     args,
     stdin: 'piped',
