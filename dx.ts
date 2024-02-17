@@ -104,6 +104,8 @@ const printHelp = (): void => {
 };
 
 const run = async (args: string[]): Promise<number> => {
+  console.log('dx > deno', args.join(' '));
+
   const command = new Deno.Command(Deno.execPath(), {
     args,
     stdin: 'piped',
@@ -131,6 +133,11 @@ const run = async (args: string[]): Promise<number> => {
 export const dx = async (args?: string[]): Promise<number> => {
   args = [...(args ?? [])];
 
+  if (args.length < 1) {
+    printHelp();
+    return 0;
+  }
+
   const parsedArgs: Args = parseDxArgs(args);
 
   if (parsedArgs.version) {
@@ -143,26 +150,26 @@ export const dx = async (args?: string[]): Promise<number> => {
     return 0;
   }
 
-  const arg0: string | null = args.at(0)?.toString() ?? null;
-  if (!arg0) {
-    printHelp();
-    return 0;
+  const key: string | undefined = args.find((arg) => !arg.startsWith('-'));
+
+  if (!key) {
+    throw new Error(`Unknown command`);
   }
 
   const tasks: string[] = await getTasks();
-  const filePath: string | undefined = getFilePathByName(arg0);
+  const filePath: string | undefined = getFilePathByName(key);
 
-  if (extensions.some((ext) => arg0.endsWith(ext))) {
+  if (extensions.some((ext) => key?.endsWith(ext))) {
     args.unshift('run');
-  } else if (tasks.includes(arg0)) {
+  } else if (tasks.includes(key)) {
     args.unshift('task');
   } else if (filePath) {
     args = [filePath];
     args.unshift('run');
-  } else if (arg0 === 'update') {
-    args = ['install', '-A', '-f', '-n', 'dx', '--config', './deno.json', './mod.ts'];
-  } else if (!reserved.includes(arg0)) {
-    throw new Error(`Unknown command: ${arg0}`);
+  } else if (key === 'update') {
+    args = ['install', '--allow-read', '-f', '-n', 'dx', '--config', './deno.json', './mod.ts'];
+  } else if (!reserved.includes(key)) {
+    throw new Error(`Unknown command: ${key}`);
   }
 
   const code: number = await run(args);

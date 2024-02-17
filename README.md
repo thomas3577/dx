@@ -35,6 +35,18 @@ deno run app.ts
 **Note:**\
 If a deno task with this name exists, it will be executed.
 
+### Run app (with args)
+
+```bash
+dx --allow-read app
+```
+
+will execute:
+
+```bash
+deno run --allow-read app.ts
+```
+
 ### Run Deno Task
 
 **deno.json:**
