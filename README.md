@@ -3,7 +3,7 @@
 ## Install
 
 ```bash
-deno install -A -f -n dx --config ./deno.json https://deno.land/x/dx@v1.0.14/mod.ts
+deno install -A -f -n dx --config ./deno.json https://deno.land/x/dx/mod.ts
 ```
 
 ## Commands
