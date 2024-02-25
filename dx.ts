@@ -1,6 +1,6 @@
-import { join, toFileUrl } from '$std/path/mod.ts';
-import { Args, parseArgs } from '$std/cli/mod.ts';
-import { exists, existsSync } from '$std/fs/mod.ts';
+import { join, toFileUrl } from '@std/path';
+import { Args, parseArgs } from '@std/cli';
+import { exists, existsSync } from '@std/fs';
 
 import { VERSION } from './version.ts';
 
