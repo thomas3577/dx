@@ -1,4 +1,4 @@
-import { assertEquals } from '$std/assert/mod.ts';
+import { assertEquals } from '@std/assert';
 import { dx } from './dx.ts';
 
 Deno.test('dx is a function', () => {

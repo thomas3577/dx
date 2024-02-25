@@ -1,9 +1,14 @@
 # Deno Task CLI
 
+A Deno CLI for lazy typists.
+
+**Important!**
+This cli is still under development and probably very buggy.
+
 ## Install
 
 ```bash
-deno install -A -f -n dx --config ./deno.json https://deno.land/x/dx/mod.ts
+deno install -allow-read -f -n dx https://jsr.io/@dx/dx
 ```
 
 ## Commands
