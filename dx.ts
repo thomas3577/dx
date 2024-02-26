@@ -167,7 +167,7 @@ export const dx = async (args?: string[]): Promise<number> => {
     args = [filePath];
     args.unshift('run');
   } else if (key === 'update') {
-    args = ['install', '--allow-read', '-f', '-n', 'dx', '--config', './deno.json', './mod.ts'];
+    args = ['install', '--allow-run', '--allow-read', '-f', '-n', 'dx', '-c', './deno.json', './mod.ts'];
   } else if (!reserved.includes(key)) {
     throw new Error(`Unknown command: ${key}`);
   }

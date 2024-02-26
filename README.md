@@ -8,7 +8,7 @@ This cli is still under development and probably very buggy.
 ## Install
 
 ```bash
-deno install -allow-read -f -n dx https://jsr.io/@dx/dx
+deno install --allow-read --allow-run -n dx -c ./deno.json https://jsr.io/@dx/dx
 ```
 
 ## Commands
