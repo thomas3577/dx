@@ -1,12 +1,12 @@
 {
   "name": "@dx/dx",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "exports": {
     ".": "./mod.ts",
     "./dx": "./dx.ts"
   },
   "tasks": {
-    "install": "deno install --allow-read --allow-run -f -n dx -c ./deno.json ./mod.ts",
+    "install": "deno install --allow-read --allow-run --allow-sys -f -n dx -c ./deno.json ./mod.ts",
     "cache": "deno cache --lock=deno.lock --lock-write ./mod.ts",
     "test": "deno test --coverage=./coverage",
     "test:cov": "deno coverage coverage --lcov ./coverage > ./coverage/lcov.info",
@@ -30,10 +30,6 @@
       "include": [
         "ban-untagged-todo",
         "no-deprecated-deno-api"
-      ],
-      "exclude": [
-        "no-explicit-any",
-        "no-inferrable-types"
       ]
     }
   },
@@ -45,6 +41,7 @@
     "proseWrap": "preserve",
     "exclude": [
       ".vscode/**",
+      "coverage",
       "cspell.json"
     ]
   }

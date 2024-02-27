@@ -113,19 +113,29 @@ const run = async (args: string[]): Promise<number> => {
     stderr: 'piped',
   });
 
-  const child: Deno.ChildProcess = command.spawn();
+  const process: Deno.ChildProcess = command.spawn();
 
-  for await (const line of child.stdout) {
-    console.log(textDecoder.decode(line));
-  }
+  process.stdout.pipeTo(
+    new WritableStream({
+      write(chunk): void {
+        for (const line of textDecoder.decode(chunk).split(/\r?\n/)) {
+          console.log(`${line}`);
+        }
+      },
+    }),
+  );
 
-  for await (const line of child.stderr) {
-    console.error(textDecoder.decode(line));
-  }
+  process.stderr.pipeTo(
+    new WritableStream({
+      write(chunk): void {
+        for (const line of textDecoder.decode(chunk).split(/\r?\n/)) {
+          console.error(`${line}`);
+        }
+      },
+    }),
+  );
 
-  child.stdin.close();
-
-  const status: Deno.CommandStatus = await child.status;
+  const status: Deno.CommandStatus = await process.status;
 
   return status.code;
 };
