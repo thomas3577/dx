@@ -15,6 +15,7 @@ const extensions: string[] = [
 
 const reserved: string[] = [
   'run',
+  'add',
   'bench',
   'bundle',
   'cache',
@@ -26,7 +27,9 @@ const reserved: string[] = [
   'eval',
   'fmt',
   'init',
+  'info',
   'install',
+  'jupyter',
   'uninstall',
   'lsp',
   'lint',
@@ -37,7 +40,6 @@ const reserved: string[] = [
   'upgrade',
   'vendor',
   'help',
-  'version',
 ];
 
 const getFilePathByName = (value: string): string | undefined =>
