@@ -2,8 +2,7 @@
   "name": "@dx/dx",
   "version": "1.0.20",
   "exports": {
-    ".": "./mod.ts",
-    "./dx": "./dx.ts"
+    ".": "./mod.ts"
   },
   "tasks": {
     "install": "deno install --allow-read --allow-run --allow-sys -f -n dx -c ./deno.json ./mod.ts",
