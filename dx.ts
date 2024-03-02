@@ -13,34 +13,28 @@ const extensions: string[] = [
   '.jsx',
 ];
 
-const reserved: string[] = [
-  'run',
-  'add',
-  'bench',
-  'bundle',
-  'cache',
-  'check',
-  'compile',
-  'completions',
-  'coverage',
-  'doc',
-  'eval',
-  'fmt',
-  'init',
-  'info',
-  'install',
-  'jupyter',
-  'uninstall',
-  'lsp',
-  'lint',
-  'repl',
-  'task',
-  'test',
-  'types',
-  'upgrade',
-  'vendor',
-  'help',
-];
+const getReserved = (): (string | undefined)[] => {
+  const textDecoder = new TextDecoder();
+  const command = new Deno.Command(Deno.execPath(), { args: ['--help'] });
+  const output: Deno.CommandOutput = command.outputSync();
+  const outputArr: string[] = textDecoder.decode(output.stdout).trim().split('\n');
+  let go = false;
+
+  return outputArr
+    .filter((part) => {
+      if (part === 'Options:') {
+        go = false;
+        return false;
+      } else if (go) {
+        return true;
+      } else if (part === 'Commands:') {
+        go = true;
+        return false;
+      }
+    })
+    .map((part) => part.trim().split(' ').at(0)?.trim())
+    .filter((part) => part !== undefined && part.length > 0);
+};
 
 const getFilePathByName = (value: string): string | undefined =>
   extensions
@@ -187,7 +181,7 @@ export const dx = async (args?: string[]): Promise<number> => {
     args = ['run', ...denoCommandArgs, filePath, ...appsArgs];
   } else if (denoCommand === 'update') {
     args = ['install', '--allow-run', '--allow-read', '-f', '-n', 'dx', '-c', './deno.json', './mod.ts'];
-  } else if (!reserved.includes(denoCommand)) {
+  } else if (!getReserved().includes(denoCommand)) {
     throw new Error(`Unknown command: ${denoCommand}`);
   }
 
