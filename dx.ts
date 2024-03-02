@@ -140,6 +140,8 @@ const run = async (args: string[]): Promise<number> => {
 
   const status: Deno.CommandStatus = await process.status;
 
+  process.stdin.close();
+
   return status.code;
 };
 
