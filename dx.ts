@@ -96,12 +96,13 @@ const printHelp = (): void => {
   console.log('\n');
   console.log(`Usage: dx [COMMAND] [OPTIONS]`);
   console.log('\nCommands:');
-  console.log('  update       Updates dx');
-  console.log('  test         Runs tests');
-  console.log('  fmt          Runs fmt');
-  console.log('  <TOOLS>      Runs tools (https://deno.land/manual/tools)');
+  console.log('  update        Updates dx');
+  console.log('  test          Runs tests');
+  console.log('  fmt           Runs fmt');
+  console.log('  <TOOLS>       Runs tools (https://deno.land/manual/tools)');
   console.log('\nOptions:');
-  console.log('  -h, --help   Display this help and exit');
+  console.log('  -h, --help    Display this help and exit');
+  console.log('  -v, --version Display version of dx and exit');
   console.log('\n');
 };
 
@@ -142,6 +143,8 @@ const run = async (args: string[]): Promise<number> => {
   return status.code;
 };
 
+const hasExtension = (value: string): boolean => extensions.some((ext) => value.endsWith(ext));
+
 export const dx = async (args?: string[]): Promise<number> => {
   args = [...(args ?? [])];
 
@@ -162,26 +165,28 @@ export const dx = async (args?: string[]): Promise<number> => {
     return 0;
   }
 
-  const key: string | undefined = args.find((arg) => !arg.startsWith('-'));
-
-  if (!key) {
+  const denoCommandIndex: number = args.findIndex((arg: string) => !arg.startsWith('-'));
+  if (denoCommandIndex < 0) {
     throw new Error(`Unknown command`);
   }
 
+  const denoCommand: string = args[denoCommandIndex];
+  const denoCommandArgs: string[] = args.slice(0, denoCommandIndex);
+  const appsArgs: string[] = args.slice(denoCommandIndex + 1);
   const tasks: string[] = await getTasks();
-  const filePath: string | undefined = getFilePathByName(key);
+  const filePath: string | undefined = getFilePathByName(denoCommand);
 
-  if (extensions.some((ext) => key?.endsWith(ext))) {
+  if (hasExtension(denoCommand)) {
     args.unshift('run');
-  } else if (tasks.includes(key)) {
+  } else if (tasks.includes(denoCommand)) {
     args.unshift('task');
+    args = args.filter((arg) => !denoCommandArgs.includes(arg));
   } else if (filePath) {
-    args = [filePath];
-    args.unshift('run');
-  } else if (key === 'update') {
+    args = ['run', ...denoCommandArgs, filePath, ...appsArgs];
+  } else if (denoCommand === 'update') {
     args = ['install', '--allow-run', '--allow-read', '-f', '-n', 'dx', '-c', './deno.json', './mod.ts'];
-  } else if (!reserved.includes(key)) {
-    throw new Error(`Unknown command: ${key}`);
+  } else if (!reserved.includes(denoCommand)) {
+    throw new Error(`Unknown command: ${denoCommand}`);
   }
 
   const code: number = await run(args);
