@@ -1,5 +1,9 @@
 # Deno Task CLI
 
+[![JSR Version](https://jsr.io/badges/@dx/dx)](https://jsr.io/@dx/dx)
+[![JSR Score](https://jsr.io/badges/@dx/dx/score)](https://jsr.io/@dx/dx/score)
+[![ci](https://github.com/thomas3577/dx/actions/workflows/deno.yml/badge.svg)](https://github.com/thomas3577/dx/actions/workflows/deno.yml)
+
 A Deno CLI for lazy typists.
 
 ## Install
