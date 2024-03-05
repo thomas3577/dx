@@ -180,7 +180,7 @@ export const dx = async (args?: string[]): Promise<number> => {
   } else if (filePath) {
     args = ['run', ...denoCommandArgs, filePath, ...appsArgs];
   } else if (denoCommand === 'update') {
-    args = ['install', '--allow-run', '--allow-read', '-f', '-n', 'dx', '-c', './deno.json', './mod.ts'];
+    args = ['install', '--allow-run', '--allow-read', '-f', '-n', 'dx', '-c', './deno.json', './cli.ts'];
   } else if (!getReserved().includes(denoCommand)) {
     throw new Error(`Unknown command: ${denoCommand}`);
   }
