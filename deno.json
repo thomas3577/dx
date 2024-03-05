@@ -1,9 +1,7 @@
 {
   "name": "@dx/dx",
-  "version": "1.0.24",
-  "exports": {
-    ".": "./mod.ts"
-  },
+  "version": "1.0.25",
+  "exports": "./mod.ts",
   "tasks": {
     "install": "deno install --allow-read --allow-run --allow-sys -f -n dx -c ./deno.json ./mod.ts",
     "cache": "deno cache --lock=deno.lock --lock-write ./mod.ts",
