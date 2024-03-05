@@ -56,7 +56,7 @@ Deno.test('dx returns code 0 if args contains known command', async () => {
 });
 
 Deno.test('dx returns code 0 if args contains known file', async () => {
-  const args: string[] = ['cli.ts'];
+  const args: string[] = ['mod.ts'];
   const actual = await dx(args);
 
   assertEquals(actual, 0);

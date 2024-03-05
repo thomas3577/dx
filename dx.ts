@@ -163,7 +163,7 @@ export const dx = async (args?: string[]): Promise<number> => {
 
   const denoCommandIndex: number = args.findIndex((arg: string) => !arg.startsWith('-'));
   if (denoCommandIndex < 0) {
-    throw new Error(`Unknown command`);
+    throw new Error(`Deno command not found`);
   }
 
   const denoCommand: string = args[denoCommandIndex];
@@ -180,9 +180,9 @@ export const dx = async (args?: string[]): Promise<number> => {
   } else if (filePath) {
     args = ['run', ...denoCommandArgs, filePath, ...appsArgs];
   } else if (denoCommand === 'update') {
-    args = ['install', '--allow-run', '--allow-read', '-f', '-n', 'dx', '-c', './deno.json', './cli.ts'];
+    args = ['install', '--allow-run', '--allow-read', '-f', '-n', 'dx', '-c', './deno.json', 'jsr:@dx/dx'];
   } else if (!getReserved().includes(denoCommand)) {
-    throw new Error(`Unknown command: ${denoCommand}`);
+    throw new Error(`Unknown deno command: ${denoCommand}`);
   }
 
   const code: number = await run(args);

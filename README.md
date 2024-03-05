@@ -2,13 +2,10 @@
 
 A Deno CLI for lazy typists.
 
-**Important!**
-This cli is still under development and probably very buggy.
-
 ## Install
 
 ```bash
-deno install --allow-read --allow-run -n dx -c ./deno.json https://jsr.io/@dx/dx
+deno install --allow-read --allow-run -n dx -c ./deno.json jsr:@dx/dx
 ```
 
 ## Commands
