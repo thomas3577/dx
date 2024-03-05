@@ -2,7 +2,7 @@
   "name": "@dx/dx",
   "version": "1.0.23",
   "exports": {
-    "cli": "./cli.ts"
+    "./cli": "./cli.ts"
   },
   "tasks": {
     "install": "deno install --allow-read --allow-run --allow-sys -f -n dx -c ./deno.json ./cli.ts",
