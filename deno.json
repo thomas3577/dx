@@ -14,10 +14,10 @@
     "strict": true
   },
   "imports": {
-    "@std/path": "jsr:@std/path@0.219",
-    "@std/fs": "jsr:@std/fs@0.219",
-    "@std/cli": "jsr:@std/cli@0.219",
-    "@std/assert": "jsr:@std/assert@0.219"
+    "@std/path": "jsr:@std/path@0.220",
+    "@std/fs": "jsr:@std/fs@0.220",
+    "@std/cli": "jsr:@std/cli@0.220",
+    "@std/assert": "jsr:@std/assert@0.220"
   },
   "publish": {
     "exclude": [
