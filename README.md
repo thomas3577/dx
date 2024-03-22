@@ -86,3 +86,23 @@ will execute:
 ```bash
 deno test
 ```
+
+### Init Deno
+
+```bash
+dx init
+```
+
+will execute:
+
+```bash
+deno init
+```
+
+...but...
+
+```bash
+dx init app
+```
+
+...executes a slightly extended init. The value behind `dx init` creates an initial file with this name. This means that `dx init main` creates the file `main.ts` (and `main.test.ts`).
