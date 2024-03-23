@@ -2,6 +2,7 @@ import { join, toFileUrl } from '@std/path';
 import { Args, parseArgs } from '@std/cli';
 import { exists, existsSync } from '@std/fs';
 
+import { init } from './dx-init.ts';
 import { VERSION } from './version.ts';
 
 const textDecoder = new TextDecoder();
@@ -91,6 +92,7 @@ const printHelp = (): void => {
   console.log(`Usage: dx [COMMAND] [OPTIONS]`);
   console.log('\nCommands:');
   console.log('  update        Updates dx');
+  console.log('  init <NAME>   Extended init by name');
   console.log('  test          Runs tests');
   console.log('  fmt           Runs fmt');
   console.log('  <TOOLS>       Runs tools (https://deno.land/manual/tools)');
@@ -141,7 +143,7 @@ const run = async (args: string[]): Promise<number> => {
 
 const hasExtension = (value: string): boolean => extensions.some((ext) => value.endsWith(ext));
 
-export const dx = async (args?: string[]): Promise<number> => {
+export const dx = async (args?: string[]): Promise<number | undefined> => {
   args = [...(args ?? [])];
 
   if (args.length < 1) {
@@ -174,18 +176,22 @@ export const dx = async (args?: string[]): Promise<number> => {
 
   if (hasExtension(denoCommand)) {
     args.unshift('run');
+    return await run(args);
   } else if (tasks.includes(denoCommand)) {
     args.unshift('task');
     args = args.filter((arg) => !denoCommandArgs.includes(arg));
+    return await run(args);
   } else if (filePath) {
     args = ['run', ...denoCommandArgs, filePath, ...appsArgs];
+    return await run(args);
   } else if (denoCommand === 'update') {
     args = ['install', '--allow-run', '--allow-read', '-f', '-n', 'dx', '-c', './deno.json', 'jsr:@dx/dx'];
+    return await run(args);
+  } else if (denoCommand === 'init' && appsArgs.length > 0) {
+    return await init(appsArgs);
   } else if (!getReserved().includes(denoCommand)) {
     throw new Error(`Unknown deno command: ${denoCommand}`);
   }
 
-  const code: number = await run(args);
-
-  return code;
+  return await run(args);
 };
