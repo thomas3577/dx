@@ -1,4 +1,6 @@
 import { assertEquals } from '@std/assert';
+import { assertSpyCall, spy } from '@std/testing/mock';
+
 import { dx } from './dx.ts';
 
 Deno.test('dx is a function', () => {
@@ -15,56 +17,68 @@ Deno.test('dx returns a promise', () => {
 
 Deno.test('dx returns code 0 if args undefined', async () => {
   const args: string[] = undefined as unknown as string[];
-  const actual = await dx(args);
+  const actual: number | undefined = await dx(args);
 
   assertEquals(actual, 0);
 });
 
 Deno.test('dx returns code 0 if args null', async () => {
   const args: string[] = null as unknown as string[];
-  const actual = await dx(args);
+  const actual: number | undefined = await dx(args);
 
   assertEquals(actual, 0);
 });
 
 Deno.test('dx returns code 0 if args empty', async () => {
   const args: string[] = [];
-  const actual = await dx(args);
+  const actual: number | undefined = await dx(args);
 
   assertEquals(actual, 0);
 });
 
 Deno.test('dx returns code 0 if args contains --help', async () => {
   const args: string[] = ['--help'];
-  const actual = await dx(args);
+  const actual: number | undefined = await dx(args);
 
   assertEquals(actual, 0);
 });
 
 Deno.test('dx returns code 0 if args contains --version', async () => {
   const args: string[] = ['--version'];
-  const actual = await dx(args);
+  const actual: number | undefined = await dx(args);
 
   assertEquals(actual, 0);
 });
 
 Deno.test('dx returns code 0 if args contains known command', async () => {
   const args: string[] = ['fmt'];
-  const actual = await dx(args);
+  const actual: number | undefined = await dx(args);
 
   assertEquals(actual, 0);
 });
 
 Deno.test('dx returns code 0 if args contains known file', async () => {
   const args: string[] = ['version.ts'];
-  const actual = await dx(args);
+  const actual: number | undefined = await dx(args);
 
   assertEquals(actual, 0);
 });
 
-Deno.test('dx returns code 0 if args contains known command with args', async () => {
-  const args: string[] = ['fmt', '--check'];
-  const actual = await dx(args);
+Deno.test(`should run commands`, async () => {
+  const cases = [
+    { args: ['fmt'], expected: ['dx > deno', 'fmt'] },
+    { args: ['fmt', '--check'], expected: ['dx > deno', 'fmt --check'] },
+    { args: ['test'], expected: ['dx > deno', 'task test'] },
+  ];
 
-  assertEquals(actual, 0);
+  for (const c of cases) {
+    const logSpy = spy(console, 'log');
+    const args: string[] = [...c.args, '--dryrun'];
+    const actual: number | undefined = await dx(args);
+
+    assertEquals(actual, 0);
+    assertSpyCall(logSpy, 0, { args: c.expected });
+
+    logSpy.restore();
+  }
 });

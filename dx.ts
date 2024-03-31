@@ -75,6 +75,7 @@ const parseDxArgs = (args: string[]): Args =>
     boolean: [
       'help',
       'version',
+      'dryrun',
     ],
     stopEarly: false,
   });
@@ -99,11 +100,16 @@ const printHelp = (): void => {
   console.log('\nOptions:');
   console.log('  -h, --help    Display this help and exit');
   console.log('  -v, --version Display version of dx and exit');
+  console.log('      --dryrun  Run in dry-run mode');
   console.log('\n');
 };
 
-const run = async (args: string[]): Promise<number> => {
+const run = async (args: string[], dryrun: boolean = false): Promise<number> => {
   console.log('dx > deno', args.join(' '));
+
+  if (dryrun) {
+    return 0;
+  }
 
   const command = new Deno.Command(Deno.execPath(), {
     args,
@@ -163,6 +169,8 @@ export const dx = async (args?: string[]): Promise<number | undefined> => {
     return 0;
   }
 
+  args = args.filter((arg) => arg !== '--dryrun');
+
   const denoCommandIndex: number = args.findIndex((arg: string) => !arg.startsWith('-'));
   if (denoCommandIndex < 0) {
     throw new Error(`Deno command not found`);
@@ -176,22 +184,22 @@ export const dx = async (args?: string[]): Promise<number | undefined> => {
 
   if (hasExtension(denoCommand)) {
     args.unshift('run');
-    return await run(args);
+    return await run(args, parsedArgs.dryrun);
   } else if (tasks.includes(denoCommand)) {
     args.unshift('task');
     args = args.filter((arg) => !denoCommandArgs.includes(arg));
-    return await run(args);
+    return await run(args, parsedArgs.dryrun);
   } else if (filePath) {
     args = ['run', ...denoCommandArgs, filePath, ...appsArgs];
-    return await run(args);
+    return await run(args, parsedArgs.dryrun);
   } else if (denoCommand === 'update') {
     args = ['install', '--allow-run', '--allow-read', '-f', '-n', 'dx', '-c', './deno.json', 'jsr:@dx/dx'];
-    return await run(args);
+    return await run(args, parsedArgs.dryrun);
   } else if (denoCommand === 'init' && appsArgs.length > 0) {
-    return await init(appsArgs);
+    return await init(appsArgs, parsedArgs.dryrun);
   } else if (!getReserved().includes(denoCommand)) {
     throw new Error(`Unknown deno command: ${denoCommand}`);
   }
 
-  return await run(args);
+  return await run(args, parsedArgs.dryrun);
 };
