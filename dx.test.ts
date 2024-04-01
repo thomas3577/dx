@@ -58,7 +58,7 @@ Deno.test('dx returns code 0 if args contains known command', async () => {
 });
 
 Deno.test('dx returns code 0 if args contains known file', async () => {
-  const args: string[] = ['version.ts'];
+  const args: string[] = ['dx-info.ts'];
   const actual: number | undefined = await dx(args);
 
   assertEquals(actual, 0);
@@ -69,6 +69,13 @@ Deno.test(`should run commands`, async () => {
     { args: ['fmt'], expected: ['dx > deno', 'fmt'] },
     { args: ['fmt', '--check'], expected: ['dx > deno', 'fmt --check'] },
     { args: ['test'], expected: ['dx > deno', 'task test'] },
+    { args: ['install'], expected: ['dx > deno', 'task install'] },
+    { args: ['help'], expected: ['dx > deno', 'help'] },
+    { args: ['compile'], expected: ['dx > deno', 'compile'] },
+    { args: ['run', 'app.ts'], expected: ['dx > deno', 'run app.ts'] },
+    { args: ['run', 'main.ts a b -c --quiet'], expected: ['dx > deno', 'run main.ts a b -c --quiet'] },
+    { args: ['run', 'main.ts', 'a', 'b', '-c', '--quiet'], expected: ['dx > deno', 'run main.ts a b -c --quiet'] },
+    { args: ['run', '--allow-net main.ts'], expected: ['dx > deno', 'run --allow-net main.ts'] },
   ];
 
   for (const c of cases) {
