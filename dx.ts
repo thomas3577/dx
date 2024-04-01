@@ -1,9 +1,9 @@
 import { Args } from '@std/cli';
 
-import { init } from './dx-init.ts';
-import { printHelp, printVersion } from './dx-info.ts';
-import { run } from './dx-run.ts';
-import { getFilePathByName, getReserved, getTasks, hasExtension, parseDxArgs } from './dx-utils.ts';
+import { init } from './init.ts';
+import { printHelp, printVersion } from './info.ts';
+import { run } from './run.ts';
+import { getFilePathByName, getReserved, getTasks, hasExtension, parseDxArgs } from './utils.ts';
 
 export const dx = async (args?: string[]): Promise<number | undefined> => {
   args = [...(args ?? [])];
