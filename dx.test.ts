@@ -61,6 +61,17 @@ Deno.test('Shows the help of dx', async () => {
   runSpy.restore();
 });
 
+Deno.test('Shows the help of dx', async () => {
+  const runSpy = spy(runner, 'run');
+  const args: string[] = ['help'];
+  const actual: number | undefined = await dx(args);
+
+  assertEquals(actual, 0);
+  assertSpyCalls(runSpy, 0);
+
+  runSpy.restore();
+});
+
 Deno.test('Shows the version of dx', async () => {
   const runSpy = spy(runner, 'run');
   const args: string[] = ['--version'];
@@ -124,7 +135,6 @@ Deno.test(`dx runs the commands...`, async () => {
     { args: ['lint'], expected: ['dx > deno lint'] },
     { args: ['lint', '--fix'], expected: ['dx > deno lint --fix'] },
     { args: ['install'], expected: ['dx > deno task install'] },
-    { args: ['help'], expected: ['dx > deno help'] },
     { args: ['compile'], expected: ['dx > deno compile'] },
     { args: ['app.ts'], expected: ['dx > deno run app.ts'] },
     { args: ['main.ts', 'a', 'b', '-c', '--quiet'], expected: ['dx > deno run main.ts a b -c --quiet'] },

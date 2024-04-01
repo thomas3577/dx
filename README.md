@@ -87,7 +87,15 @@ will execute:
 deno test
 ```
 
-### Init Deno
+## Dry-run
+
+If you only want to see what is being executed, put the argument `--dry-run` at the end of the commands.
+
+```bash
+dx test --dry-run
+```
+
+## Init Deno
 
 ```bash
 dx init
@@ -110,3 +118,5 @@ dx init app
 ## Limitation
 
 `dx` does not call deno REPL. If you want to start REPL, execute `deno` directly.
+
+`dx -h` or `dx --help` calls the own help. If you want to call the deno help, use the original commands like `deno -h` `deno --help` or `deno help`.
