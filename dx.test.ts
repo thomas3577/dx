@@ -134,12 +134,18 @@ Deno.test(`dx runs the commands...`, async () => {
     { args: ['test'], expected: ['dx > deno task test'] },
     { args: ['lint'], expected: ['dx > deno lint'] },
     { args: ['lint', '--fix'], expected: ['dx > deno lint --fix'] },
+    { args: ['compile'], expected: ['dx > deno compile'] },
+    { args: ['compile', '--help'], expected: ['dx > deno compile --help'] },
+    { args: ['compile', '-h'], expected: ['dx > deno compile -h'] },
     { args: ['install'], expected: ['dx > deno task install'] },
     { args: ['compile'], expected: ['dx > deno compile'] },
     { args: ['app.ts'], expected: ['dx > deno run app.ts'] },
+    { args: ['https://mydomain.com/main.ts'], expected: ['dx > deno run https://mydomain.com/main.ts'] },
     { args: ['main.ts', 'a', 'b', '-c', '--quiet'], expected: ['dx > deno run main.ts a b -c --quiet'] },
     { args: ['--allow-net', 'main.ts'], expected: ['dx > deno run --allow-net main.ts'] },
     { args: ['--watch', 'main.ts'], expected: ['dx > deno run --watch main.ts'] },
+    { args: ['check', 'main.ts'], expected: ['dx > deno check main.ts'] },
+    { args: ['--check', 'main.ts'], expected: ['dx > deno run --check main.ts'] },
   ];
 
   for (const c of cases) {

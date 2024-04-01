@@ -92,7 +92,13 @@ export const parseDxArgs = (args?: string[]): Args & { args: string[] } => {
 
   args = args?.filter((arg) => arg !== '--dry-run') ?? [];
 
+  if (parsedArgs.help && args.at(0) !== '--help' && args.at(0) !== '-h') {
+    parsedArgs.help = false;
+  }
+
   return { ...parsedArgs, args };
 };
 
-export const hasExtension = (value: string): boolean => extensions.some((ext) => value.endsWith(ext));
+export const isFileOrUrl = (value: string): boolean => {
+  return extensions.some((ext) => value.endsWith(ext)) || value.startsWith('http');
+};
