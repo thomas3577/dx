@@ -1,7 +1,8 @@
 import { assertEquals } from '@std/assert';
-import { assertSpyCall, spy } from '@std/testing/mock';
+import { assertSpyCall, assertSpyCalls, spy, stub } from '@std/testing/mock';
 
 import { dx } from './dx.ts';
+import { runner } from './run.ts';
 
 Deno.test('dx is a function', () => {
   assertEquals(typeof dx, 'function');
@@ -16,76 +17,127 @@ Deno.test('dx returns a promise', () => {
 });
 
 Deno.test('dx returns code 0 if args undefined', async () => {
+  const runSpy = spy(runner, 'run');
   const args: string[] = undefined as unknown as string[];
   const actual: number | undefined = await dx(args);
 
   assertEquals(actual, 0);
+  assertSpyCalls(runSpy, 0);
+
+  runSpy.restore();
 });
 
 Deno.test('dx returns code 0 if args null', async () => {
+  const runSpy = spy(runner, 'run');
   const args: string[] = null as unknown as string[];
   const actual: number | undefined = await dx(args);
 
   assertEquals(actual, 0);
+  assertSpyCalls(runSpy, 0);
+
+  runSpy.restore();
 });
 
 Deno.test('dx returns code 0 if args empty', async () => {
+  const runSpy = spy(runner, 'run');
   const args: string[] = [];
   const actual: number | undefined = await dx(args);
 
   assertEquals(actual, 0);
+  assertSpyCalls(runSpy, 0);
+
+  runSpy.restore();
 });
 
-Deno.test('dx returns code 0 if args contains --help', async () => {
+Deno.test('Shows the help of dx', async () => {
+  const runSpy = spy(runner, 'run');
   const args: string[] = ['--help'];
   const actual: number | undefined = await dx(args);
 
   assertEquals(actual, 0);
+  assertSpyCalls(runSpy, 0);
+
+  runSpy.restore();
 });
 
-Deno.test('dx returns code 0 if args contains --version', async () => {
+Deno.test('Shows the version of dx', async () => {
+  const runSpy = spy(runner, 'run');
   const args: string[] = ['--version'];
   const actual: number | undefined = await dx(args);
 
   assertEquals(actual, 0);
+  assertSpyCalls(runSpy, 0);
+
+  runSpy.restore();
 });
 
-Deno.test('dx returns code 0 if args contains known command', async () => {
+Deno.test('dx runs a known command', async () => {
+  const runSpy = spy(runner, 'run');
   const args: string[] = ['fmt'];
   const actual: number | undefined = await dx(args);
 
   assertEquals(actual, 0);
+  assertSpyCalls(runSpy, 1);
+
+  runSpy.restore();
 });
 
-Deno.test('dx returns code 0 if args contains known file', async () => {
-  const args: string[] = ['dx-info.ts'];
+Deno.test('dx do not runs a known command with dry-run', async () => {
+  const runCommandStub = stub(runner, 'runCommand', () => Promise.resolve(0));
+  const args: string[] = ['fmt', '--dry-run'];
   const actual: number | undefined = await dx(args);
 
   assertEquals(actual, 0);
+  assertSpyCalls(runCommandStub, 0);
+
+  runCommandStub.restore();
 });
 
-Deno.test(`should run commands`, async () => {
+Deno.test('dx runs an existing file', async () => {
+  const runSpy = spy(runner, 'run');
+  const args: string[] = ['info.ts'];
+  const actual: number | undefined = await dx(args);
+
+  assertEquals(actual, 0);
+  assertSpyCalls(runSpy, 1);
+
+  runSpy.restore();
+});
+
+Deno.test('dx do not runs an existing file with dry-run', async () => {
+  const runCommandStub = stub(runner, 'runCommand', () => Promise.resolve(0));
+  const args: string[] = ['info.ts', '--dry-run'];
+  const actual: number | undefined = await dx(args);
+
+  assertEquals(actual, 0);
+  assertSpyCalls(runCommandStub, 0);
+
+  runCommandStub.restore();
+});
+
+Deno.test(`dx runs the commands...`, async () => {
   const cases = [
-    { args: ['fmt'], expected: ['dx > deno', 'fmt'] },
-    { args: ['fmt', '--check'], expected: ['dx > deno', 'fmt --check'] },
-    { args: ['test'], expected: ['dx > deno', 'task test'] },
-    { args: ['install'], expected: ['dx > deno', 'task install'] },
-    { args: ['help'], expected: ['dx > deno', 'help'] },
-    { args: ['compile'], expected: ['dx > deno', 'compile'] },
-    { args: ['run', 'app.ts'], expected: ['dx > deno', 'run app.ts'] },
-    { args: ['run', 'main.ts a b -c --quiet'], expected: ['dx > deno', 'run main.ts a b -c --quiet'] },
-    { args: ['run', 'main.ts', 'a', 'b', '-c', '--quiet'], expected: ['dx > deno', 'run main.ts a b -c --quiet'] },
-    { args: ['run', '--allow-net main.ts'], expected: ['dx > deno', 'run --allow-net main.ts'] },
+    { args: ['fmt'], expected: ['dx > deno fmt'] },
+    { args: ['fmt', '--check'], expected: ['dx > deno fmt --check'] },
+    { args: ['test'], expected: ['dx > deno task test'] },
+    { args: ['install'], expected: ['dx > deno task install'] },
+    { args: ['help'], expected: ['dx > deno help'] },
+    { args: ['compile'], expected: ['dx > deno compile'] },
+    { args: ['app.ts'], expected: ['dx > deno run app.ts'] },
+    { args: ['main.ts', 'a', 'b', '-c', '--quiet'], expected: ['dx > deno run main.ts a b -c --quiet'] },
+    { args: ['--allow-net', 'main.ts'], expected: ['dx > deno run --allow-net main.ts'] },
   ];
 
   for (const c of cases) {
+    const runCommandStub = stub(runner, 'runCommand', () => Promise.resolve(0));
     const logSpy = spy(console, 'log');
-    const args: string[] = [...c.args, '--dryrun'];
-    const actual: number | undefined = await dx(args);
+    const actual: number | undefined = await dx(c.args);
 
     assertEquals(actual, 0);
     assertSpyCall(logSpy, 0, { args: c.expected });
+    assertSpyCalls(runCommandStub, 1);
 
     logSpy.restore();
+    runCommandStub.restore();
   }
 });
