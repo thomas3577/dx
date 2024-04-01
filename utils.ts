@@ -61,8 +61,23 @@ export const getTasks = async (): Promise<string[]> => {
   return tasks;
 };
 
-export const parseDxArgs = (args: string[]): Args =>
-  parseArgs(args, {
+export const parseDxArgs = (args?: string[]): Args & { args: string[] } => {
+  args = [...(args ?? [])];
+  args = args.map((arg) => arg.toLocaleLowerCase());
+
+  if (args.length < 1 || (args.length === 1 && args.at(0) === 'repl')) {
+    throw new Error('Did you want to execute REPL. Please use the Deno command `deno`. To specify permissions, run `deno repl` with allow flags.');
+  }
+
+  if (args.length > 0 && args.at(0) === 'help') {
+    args[0] = '--help';
+  }
+
+  if (args.length > 0 && args.at(0) === 'version') {
+    args[0] = '--version';
+  }
+
+  const parsedArgs = parseArgs(args, {
     alias: {
       'help': 'h',
       'version': 'v',
@@ -74,5 +89,10 @@ export const parseDxArgs = (args: string[]): Args =>
     ],
     stopEarly: false,
   });
+
+  args = args?.filter((arg) => arg !== '--dry-run') ?? [];
+
+  return { ...parsedArgs, args };
+};
 
 export const hasExtension = (value: string): boolean => extensions.some((ext) => value.endsWith(ext));

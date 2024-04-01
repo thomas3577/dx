@@ -1,5 +1,3 @@
-import { Args } from '@std/cli';
-
 import { internals } from './internals.ts';
 import { printHelp, printVersion } from './info.ts';
 import { runner } from './run.ts';
@@ -7,15 +5,10 @@ import { getFilePathByName, getReserved, getTasks, hasExtension, parseDxArgs } f
 
 export const dx = async (args?: string[]): Promise<number | undefined> => {
   try {
-    args = [...(args ?? [])];
-    args = args.map((arg) => arg.toLocaleLowerCase());
-
-    if (args.length < 1 || (args.length === 1 && args[0].toLowerCase() === 'repl')) {
-      throw new Error('Did you want to execute REPL. Please use the Deno command `deno`. To specify permissions, run `deno repl` with allow flags.');
-    }
-
-    const parsedArgs: Args = parseDxArgs(args);
+    const parsedArgs = parseDxArgs(args);
     const dryRun: boolean = parsedArgs['dry-run'];
+
+    args = parsedArgs.args;
 
     if (parsedArgs.version) {
       printVersion();
@@ -26,8 +19,6 @@ export const dx = async (args?: string[]): Promise<number | undefined> => {
       printHelp();
       return 0;
     }
-
-    args = args.filter((arg) => arg !== '--dry-run');
 
     const tasks: string[] = await getTasks();
 
