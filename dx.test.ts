@@ -19,9 +19,10 @@ Deno.test('dx returns a promise', () => {
 Deno.test('dx returns code 0 if args undefined', async () => {
   const runSpy = spy(runner, 'run');
   const args: string[] = undefined as unknown as string[];
+
   const actual: number | undefined = await dx(args);
 
-  assertEquals(actual, 0);
+  assertEquals(actual, 1);
   assertSpyCalls(runSpy, 0);
 
   runSpy.restore();
@@ -32,7 +33,7 @@ Deno.test('dx returns code 0 if args null', async () => {
   const args: string[] = null as unknown as string[];
   const actual: number | undefined = await dx(args);
 
-  assertEquals(actual, 0);
+  assertEquals(actual, 1);
   assertSpyCalls(runSpy, 0);
 
   runSpy.restore();
@@ -43,7 +44,7 @@ Deno.test('dx returns code 0 if args empty', async () => {
   const args: string[] = [];
   const actual: number | undefined = await dx(args);
 
-  assertEquals(actual, 0);
+  assertEquals(actual, 1);
   assertSpyCalls(runSpy, 0);
 
   runSpy.restore();
@@ -120,12 +121,15 @@ Deno.test(`dx runs the commands...`, async () => {
     { args: ['fmt'], expected: ['dx > deno fmt'] },
     { args: ['fmt', '--check'], expected: ['dx > deno fmt --check'] },
     { args: ['test'], expected: ['dx > deno task test'] },
+    { args: ['lint'], expected: ['dx > deno lint'] },
+    { args: ['lint', '--fix'], expected: ['dx > deno lint --fix'] },
     { args: ['install'], expected: ['dx > deno task install'] },
     { args: ['help'], expected: ['dx > deno help'] },
     { args: ['compile'], expected: ['dx > deno compile'] },
     { args: ['app.ts'], expected: ['dx > deno run app.ts'] },
     { args: ['main.ts', 'a', 'b', '-c', '--quiet'], expected: ['dx > deno run main.ts a b -c --quiet'] },
     { args: ['--allow-net', 'main.ts'], expected: ['dx > deno run --allow-net main.ts'] },
+    { args: ['--watch', 'main.ts'], expected: ['dx > deno run --watch main.ts'] },
   ];
 
   for (const c of cases) {
