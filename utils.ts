@@ -70,7 +70,7 @@ export const parseDxArgs = (args: string[]): Args =>
     boolean: [
       'help',
       'version',
-      'dryrun',
+      'dry-run',
     ],
     stopEarly: false,
   });

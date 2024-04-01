@@ -22,6 +22,6 @@ export const printHelp = (): void => {
   console.log('\nOptions:');
   console.log('  -h, --help    Display this help and exit');
   console.log('  -v, --version Display version of dx and exit');
-  console.log('      --dryrun  Run in dry-run mode');
+  console.log('      --dry-run Run in dry-run mode');
   console.log('\n');
 };

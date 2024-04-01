@@ -123,8 +123,8 @@ const writeTest = async (entrytest: string, entrypoint: string): Promise<void> =
   return await Deno.writeTextFile(path, content);
 };
 
-export const init = async (args: string[], dryrun: boolean = false): Promise<number> => {
-  console.log('dx > init', args.join(' '));
+const init = async (args: string[], dryrun: boolean = false): Promise<number> => {
+  console.log(`dx > init ${args.join(' ')}`);
 
   if (dryrun) {
     return 0;
@@ -150,3 +150,5 @@ export const init = async (args: string[], dryrun: boolean = false): Promise<num
 
   return 0;
 };
+
+export const internals = { init };
