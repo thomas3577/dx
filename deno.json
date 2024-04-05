@@ -1,10 +1,10 @@
 {
   "name": "@dx/dx",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "exports": "./mod.ts",
   "tasks": {
     "install": "deno install --allow-read --allow-run --allow-sys --allow-env --allow-write --unstable-kv -f -n dx -c ./deno.json ./mod.ts",
-    "cache": "deno cache --lock=deno.lock --lock-write ./mod.ts",
+    "lock": "deno cache --lock=deno.lock --lock-write ./mod.ts",
     "test": "deno test --allow-read --allow-run --allow-sys --allow-env --coverage=./coverage",
     "test:cov": "deno coverage coverage --lcov ./coverage > ./coverage/lcov.info",
     "test:html": "genhtml -o ./coverage/html ./coverage/lcov.info",

@@ -23,7 +23,7 @@ export const dx = async (args?: string[]): Promise<number | undefined> => {
     const tasks: string[] = await getTasks();
 
     // If you accidentally enter the command 'run', it should be removed.
-    if (args.length > 1 && args.at(0) === 'run' && !args.at(1)?.startsWith('-')) {
+    if (args.length > 1 && args.at(0) === 'run' && args.findLastIndex((arg: string) => !arg.startsWith('-')) > 0) {
       args.shift();
     }
 
@@ -49,7 +49,7 @@ export const dx = async (args?: string[]): Promise<number | undefined> => {
       return await runner.run(args, dryRun);
     }
 
-    // Check if the command is a deno subcommand
+    // Check if the command is a deno command
     const appsArgs: string[] = args.slice(denoCommandIndex + 1);
     const filePath: string | undefined = getFilePathByName(denoCommand);
     if (filePath) {
