@@ -22,6 +22,12 @@ export const dx = async (args?: string[]): Promise<number | undefined> => {
 
     const tasks: string[] = await getTasks();
 
+    // If you accidentally enter the command 'run', it should be removed.
+    if (args.length > 1 && args.at(0) === 'run' && args.findLastIndex((arg: string) => !arg.startsWith('-')) > 0) {
+      args.shift();
+    }
+
+    // Find a command that is not a flag
     const denoCommandIndex: number = args.findIndex((arg: string) => !arg.startsWith('-'));
     if (denoCommandIndex < 0) {
       throw new Error(`Deno command not found`);
@@ -30,17 +36,20 @@ export const dx = async (args?: string[]): Promise<number | undefined> => {
     const denoCommand: string = args[denoCommandIndex];
     const denoCommandArgs: string[] = args.slice(0, denoCommandIndex);
 
+    // Check if the command is a file or URL
     if (isFileOrUrl(denoCommand)) {
       args.unshift('run');
       return await runner.run(args, dryRun);
     }
 
+    // Check if the command is a deno task
     if (tasks.includes(denoCommand)) {
       args.unshift('task');
       args = args.filter((arg) => !denoCommandArgs.includes(arg));
       return await runner.run(args, dryRun);
     }
 
+    // Check if the command is a deno command
     const appsArgs: string[] = args.slice(denoCommandIndex + 1);
     const filePath: string | undefined = getFilePathByName(denoCommand);
     if (filePath) {
@@ -48,11 +57,13 @@ export const dx = async (args?: string[]): Promise<number | undefined> => {
       return await runner.run(args, dryRun);
     }
 
+    // If command is 'update' then update/install dx cli
     if (denoCommand === 'update') {
       args = ['install', '--allow-run', '--allow-read', '-f', '-n', 'dx', '-c', './deno.json', 'jsr:@dx/dx'];
       return await runner.run(args, dryRun);
     }
 
+    // If command is 'init' then create a new project (extended)
     if (denoCommand === 'init' && appsArgs.length > 0) {
       return await internals.init(appsArgs, dryRun);
     }
