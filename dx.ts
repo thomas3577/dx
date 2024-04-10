@@ -59,7 +59,7 @@ export const dx = async (args?: string[]): Promise<number | undefined> => {
 
     // If command is 'update' then update/install dx cli
     if (denoCommand === 'update') {
-      args = ['install', '--allow-run', '--allow-read', '-f', '-n', 'dx', '-c', './deno.json', 'jsr:@dx/dx'];
+      args = ['install', '--allow-read', '--allow-run', '--allow-sys', '--allow-env', '--allow-write', '--unstable-kv', '-g', '-f', '-n', 'dx', 'jsr:@dx/dx'];
       return await runner.run(args, dryRun);
     }
 

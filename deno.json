@@ -1,9 +1,9 @@
 {
   "name": "@dx/dx",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "exports": "./mod.ts",
   "tasks": {
-    "install": "deno install --allow-read --allow-run --allow-sys --allow-env --allow-write --unstable-kv -f -n dx -c ./deno.json ./mod.ts",
+    "install": "deno install --allow-read --allow-run --allow-sys --allow-env --allow-write --unstable-kv -g -f -n dx jsr:@dx/dx",
     "lock": "deno cache --lock=deno.lock --lock-write ./mod.ts",
     "test": "deno test --allow-read --allow-run --allow-sys --allow-env --coverage=./coverage",
     "test:cov": "deno coverage coverage --lcov ./coverage > ./coverage/lcov.info",
