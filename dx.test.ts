@@ -142,7 +142,7 @@ Deno.test(`dx runs the commands...`, async () => {
     { args: ['compile', '--allow-read', 'https://docs.deno.com/examples/welcome.ts'], expected: ['dx > deno compile --allow-read https://docs.deno.com/examples/welcome.ts'] },
     { args: ['compile', '--allow-read', 'https://docs.deno.com/examples/welcome.ts', '-p 8080'], expected: ['dx > deno compile --allow-read https://docs.deno.com/examples/welcome.ts -p 8080'] },
     { args: ['compile', '--include', 'calc.ts', '--include', 'better_calc.ts', 'main.ts'], expected: ['dx > deno compile --include calc.ts --include better_calc.ts main.ts'] },
-    { args: ['install'], expected: ['dx > deno task install'] },
+    { args: ['install'], expected: ['dx > deno install'] },
     { args: ['bench'], expected: ['dx > deno bench'] },
     { args: ['bench', 'app.ts'], expected: ['dx > deno bench app.ts'] },
     { args: ['cache'], expected: ['dx > deno cache'] },
