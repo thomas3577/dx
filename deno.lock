@@ -3,6 +3,7 @@
   "packages": {
     "specifiers": {
       "jsr:@dx/tano@0.3.19": "jsr:@dx/tano@0.3.19",
+      "jsr:@std/assert@0.222": "jsr:@std/assert@0.222.0",
       "jsr:@std/assert@^0.222.0": "jsr:@std/assert@0.222.0",
       "jsr:@std/cli@0.222": "jsr:@std/cli@0.222.0",
       "jsr:@std/datetime@0.222": "jsr:@std/datetime@0.222.0",
@@ -13,7 +14,8 @@
       "jsr:@std/io@^0.222.0": "jsr:@std/io@0.222.0",
       "jsr:@std/log@0.222": "jsr:@std/log@0.222.0",
       "jsr:@std/path@0.222": "jsr:@std/path@0.222.0",
-      "jsr:@std/path@^0.222.0": "jsr:@std/path@0.222.0"
+      "jsr:@std/path@^0.222.0": "jsr:@std/path@0.222.0",
+      "jsr:@std/testing@0.222": "jsr:@std/testing@0.222.0"
     },
     "jsr": {
       "@dx/tano@0.3.19": {
@@ -27,7 +29,10 @@
         ]
       },
       "@std/assert@0.222.0": {
-        "integrity": "cbf00c0d8125a56c087e3d1ea0e638760d47206b30e9d300bad826b811719fc7"
+        "integrity": "cbf00c0d8125a56c087e3d1ea0e638760d47206b30e9d300bad826b811719fc7",
+        "dependencies": [
+          "jsr:@std/fmt@^0.222.0"
+        ]
       },
       "@std/cli@0.222.0": {
         "integrity": "b72d34a7708ad427efca01779dfc97932fe8ea5fe50503e1ddb4684a9e177fd5",
@@ -61,6 +66,12 @@
       },
       "@std/path@0.222.0": {
         "integrity": "e2d494a0a70e0de820cdf693d47669d225c81cadb26cb2dee4e23840397aace0",
+        "dependencies": [
+          "jsr:@std/assert@^0.222.0"
+        ]
+      },
+      "@std/testing@0.222.0": {
+        "integrity": "a6d10c9fbb1df052ad7f73174d511328c08b7408bdd162ef6c3bc04def49c2ae",
         "dependencies": [
           "jsr:@std/assert@^0.222.0"
         ]
