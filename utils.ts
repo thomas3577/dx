@@ -1,6 +1,8 @@
 import { join, toFileUrl } from '@std/path';
-import { Args, parseArgs } from '@std/cli';
+import { parseArgs } from '@std/cli';
 import { exists, existsSync } from '@std/fs';
+
+import { DxArgs } from './types.ts';
 
 const extensions: string[] = [
   '.ts',
@@ -9,6 +11,11 @@ const extensions: string[] = [
   '.jsx',
 ];
 
+/**
+ * Gets the reserved words from the Deno CLI.
+ *
+ * @returns {string[]} - Returns an array of reserved words.
+ */
 export const getReserved = (): (string | undefined)[] => {
   const textDecoder = new TextDecoder();
   const command = new Deno.Command(Deno.execPath(), { args: ['--help'] });
@@ -32,11 +39,22 @@ export const getReserved = (): (string | undefined)[] => {
     .filter((part) => part !== undefined && part.length > 0);
 };
 
+/**
+ * Gets the file path by the name.
+ *
+ * @param {string} value - The name of the file.
+ * @returns {string | undefined} - Returns the file path or undefined.
+ */
 export const getFilePathByName = (value: string): string | undefined =>
   extensions
     .map((extention) => [value, extention].join(''))
     .find((path) => existsSync(path));
 
+/**
+ * Gets a list of tasks from the deno.json file.
+ *
+ * @returns {string[]} - Returns an array of tasks.
+ */
 export const getTasks = async (): Promise<string[]> => {
   const path = join(Deno.cwd(), 'deno.json');
 
@@ -61,7 +79,13 @@ export const getTasks = async (): Promise<string[]> => {
   return tasks;
 };
 
-export const parseDxArgs = (args?: string[]): Args & { args: string[] } => {
+/**
+ * Parses the arguments of the CLI.
+ *
+ * @param {string[]} args - The arguments of the CLI.
+ * @returns {DxArgs} - Returns the parsed arguments.
+ */
+export const parseDxArgs = (args?: string[]): DxArgs => {
   args = [...(args ?? [])];
   args = args.map((arg) => arg.toLocaleLowerCase());
 
@@ -99,6 +123,12 @@ export const parseDxArgs = (args?: string[]): Args & { args: string[] } => {
   return { ...parsedArgs, args };
 };
 
+/**
+ * Checks if the value is a file or URL.
+ *
+ * @param {string} value - The value to check.
+ * @returns {boolean} - Returns true if the value is a file or URL.
+ */
 export const isFileOrUrl = (value: string): boolean => {
   return extensions.some((ext) => value.endsWith(ext)) || value.startsWith('http');
 };
