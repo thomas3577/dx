@@ -1,6 +1,8 @@
 import { join, toFileUrl } from '@std/path';
 import { Args, parseArgs } from '@std/cli';
-import { exists, existsSync } from '@std/fs';
+import { existsSync } from '@std/fs';
+
+const denoJsonFileNames = ['deno.json', 'deno.jsonc'];
 
 const extensions: string[] = [
   '.ts',
@@ -38,14 +40,16 @@ export const getFilePathByName = (value: string): string | undefined =>
     .find((path) => existsSync(path));
 
 export const getTasks = async (): Promise<string[]> => {
-  const path = join(Deno.cwd(), 'deno.json');
+  const path = denoJsonFileNames
+    .map((fileName) => join(Deno.cwd(), fileName))
+    .find((filePath) =>
+      existsSync(filePath, {
+        isReadable: true,
+        isFile: true,
+      })
+    );
 
-  const isFile = await exists(path, {
-    isReadable: true,
-    isFile: true,
-  });
-
-  if (!isFile) {
+  if (!path) {
     return [];
   }
 
