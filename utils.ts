@@ -1,16 +1,26 @@
 import { join, toFileUrl } from '@std/path';
-import { Args, parseArgs } from '@std/cli';
+import { parseArgs } from '@std/cli';
 import { existsSync } from '@std/fs';
 
-const denoJsonFileNames = ['deno.json', 'deno.jsonc'];
+import { DxArgs } from './types.ts';
 
-const extensions: string[] = [
+const denoJsonFileNames: string[] = [
+  'deno.json',
+  'deno.jsonc',
+];
+
+const acceptFileExtension: string[] = [
   '.ts',
   '.js',
   '.tsx',
   '.jsx',
 ];
 
+/**
+ * Gets the reserved words from the Deno CLI.
+ *
+ * @returns {string[]} - Returns an array of reserved words.
+ */
 export const getReserved = (): (string | undefined)[] => {
   const textDecoder = new TextDecoder();
   const command = new Deno.Command(Deno.execPath(), { args: ['--help'] });
@@ -34,11 +44,22 @@ export const getReserved = (): (string | undefined)[] => {
     .filter((part) => part !== undefined && part.length > 0);
 };
 
-export const getFilePathByName = (value: string): string | undefined =>
-  extensions
+/**
+ * Gets the code file path by the name if exists.
+ *
+ * @param {string} value - The name of the file.
+ * @returns {string | undefined} - Returns the file path or undefined.
+ */
+export const getCodeFilePathByName = (value: string): string | undefined =>
+  acceptFileExtension
     .map((extention) => [value, extention].join(''))
     .find((path) => existsSync(path));
 
+/**
+ * Gets a list of tasks from the deno.json file.
+ *
+ * @returns {string[]} - Returns an array of tasks.
+ */
 export const getTasks = async (): Promise<string[]> => {
   const path = denoJsonFileNames
     .map((fileName) => join(Deno.cwd(), fileName))
@@ -65,7 +86,13 @@ export const getTasks = async (): Promise<string[]> => {
   return tasks;
 };
 
-export const parseDxArgs = (args?: string[]): Args & { args: string[] } => {
+/**
+ * Parses the arguments of the CLI.
+ *
+ * @param {string[]} args - The arguments of the CLI.
+ * @returns {DxArgs} - Returns the parsed arguments.
+ */
+export const parseDxArgs = (args?: string[]): DxArgs => {
   args = [...(args ?? [])];
   args = args.map((arg) => arg.toLocaleLowerCase());
 
@@ -103,6 +130,12 @@ export const parseDxArgs = (args?: string[]): Args & { args: string[] } => {
   return { ...parsedArgs, args };
 };
 
-export const isFileOrUrl = (value: string): boolean => {
-  return extensions.some((ext) => value.endsWith(ext)) || value.startsWith('http');
+/**
+ * Checks if the value is a accepted file.
+ *
+ * @param {string} value - The value to check.
+ * @returns {boolean} - Returns true if the value is a file.
+ */
+export const isAcceptedFile = (value: string): boolean => {
+  return acceptFileExtension.some((ext) => value.endsWith(ext));
 };
