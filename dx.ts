@@ -1,7 +1,7 @@
 import { internals } from './internals.ts';
 import { printHelp, printVersion } from './info.ts';
 import { runner } from './run.ts';
-import { getFilePathByName, getReserved, getTasks, isFileOrUrl, parseDxArgs } from './utils.ts';
+import { getCodeFilePathByName, getReserved, getTasks, isAcceptedFile, parseDxArgs } from './utils.ts';
 
 export const dx = async (args?: string[]): Promise<number | undefined> => {
   try {
@@ -36,8 +36,8 @@ export const dx = async (args?: string[]): Promise<number | undefined> => {
     const denoCommand: string = args[denoCommandIndex];
     const denoCommandArgs: string[] = args.slice(0, denoCommandIndex);
 
-    // Check if the command is a file or URL
-    if (isFileOrUrl(denoCommand)) {
+    // Check if the command is a file
+    if (isAcceptedFile(denoCommand)) {
       args.unshift('run');
       return await runner.run(args, dryRun);
     }
@@ -51,7 +51,7 @@ export const dx = async (args?: string[]): Promise<number | undefined> => {
 
     // Check if the command is a deno command
     const appsArgs: string[] = args.slice(denoCommandIndex + 1);
-    const filePath: string | undefined = getFilePathByName(denoCommand);
+    const filePath: string | undefined = getCodeFilePathByName(denoCommand);
     if (filePath) {
       args = ['run', ...denoCommandArgs, filePath, ...appsArgs];
       return await runner.run(args, dryRun);

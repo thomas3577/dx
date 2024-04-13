@@ -1,12 +1,15 @@
 import { join, toFileUrl } from '@std/path';
-import { Args, parseArgs } from '@std/cli';
+import { parseArgs } from '@std/cli';
 import { existsSync } from '@std/fs';
-
-const denoJsonFileNames = ['deno.json', 'deno.jsonc'];
 
 import { DxArgs } from './types.ts';
 
-const extensions: string[] = [
+const denoJsonFileNames: string[] = [
+  'deno.json',
+  'deno.jsonc',
+];
+
+const acceptFileExtension: string[] = [
   '.ts',
   '.js',
   '.tsx',
@@ -42,13 +45,13 @@ export const getReserved = (): (string | undefined)[] => {
 };
 
 /**
- * Gets the file path by the name.
+ * Gets the code file path by the name if exists.
  *
  * @param {string} value - The name of the file.
  * @returns {string | undefined} - Returns the file path or undefined.
  */
-export const getFilePathByName = (value: string): string | undefined =>
-  extensions
+export const getCodeFilePathByName = (value: string): string | undefined =>
+  acceptFileExtension
     .map((extention) => [value, extention].join(''))
     .find((path) => existsSync(path));
 
@@ -128,11 +131,11 @@ export const parseDxArgs = (args?: string[]): DxArgs => {
 };
 
 /**
- * Checks if the value is a file or URL.
+ * Checks if the value is a accepted file.
  *
  * @param {string} value - The value to check.
- * @returns {boolean} - Returns true if the value is a file or URL.
+ * @returns {boolean} - Returns true if the value is a file.
  */
-export const isFileOrUrl = (value: string): boolean => {
-  return extensions.some((ext) => value.endsWith(ext)) || value.startsWith('http');
+export const isAcceptedFile = (value: string): boolean => {
+  return acceptFileExtension.some((ext) => value.endsWith(ext));
 };
