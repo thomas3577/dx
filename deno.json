@@ -6,7 +6,7 @@
     "lock": "deno cache --lock=deno.lock --lock-write ./mod.ts",
     "test": "deno test --allow-read --allow-run --allow-sys --allow-env --coverage=./coverage",
     "test:cov": "deno coverage coverage --lcov ./coverage > ./coverage/lcov.info",
-    "test:html": "genhtml -o ./coverage/html ./coverage/lcov.info",
+    "test:html": "deno coverage coverage --html",
     "test:all": "deno task test && deno task test:cov && deno task test:html"
   },
   "compilerOptions": {
