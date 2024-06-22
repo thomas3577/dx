@@ -25,7 +25,7 @@ export const getReserved = (): (string | undefined)[] => {
   const textDecoder = new TextDecoder();
   const command = new Deno.Command(Deno.execPath(), { args: ['--help'] });
   const output: Deno.CommandOutput = command.outputSync();
-  const outputArr: string[] = textDecoder.decode(output.stdout).trim().split('\n');
+  const outputArr: string[] = textDecoder.decode(output.stdout).trim().replace(/\r\n/g, '\n').split('\n');
   let go = false;
 
   return outputArr
