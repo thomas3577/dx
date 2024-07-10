@@ -158,6 +158,7 @@ Deno.test(`dx runs the commands...`, async () => {
     { args: ['https://mydomain.com/main.ts'], expected: ['dx > deno run https://mydomain.com/main.ts'] },
     { args: ['main.ts', 'a', 'b', '-c', '--quiet'], expected: ['dx > deno run main.ts a b -c --quiet'] },
     { args: ['--allow-net', 'main.ts'], expected: ['dx > deno run --allow-net main.ts'] },
+    { args: ['-A', 'main.ts'], expected: ['dx > deno run -A main.ts'] },
     { args: ['--watch', 'main.ts'], expected: ['dx > deno run --watch main.ts'] },
     { args: ['check', 'main.ts'], expected: ['dx > deno check main.ts'] },
     { args: ['--check', 'main.ts'], expected: ['dx > deno run --check main.ts'] },

@@ -94,7 +94,7 @@ export const getTasks = async (): Promise<string[]> => {
  */
 export const parseDxArgs = (args?: string[]): DxArgs => {
   args = [...(args ?? [])];
-  args = args.map((arg) => arg.toLocaleLowerCase());
+  args = args.map((arg) => arg.startsWith('-') ? arg : arg.toLocaleLowerCase());
 
   if (args.length < 1 || (args.length === 1 && args.at(0) === 'repl')) {
     throw new Error('Did you want to execute REPL. Please use the Deno command `deno`. To specify permissions, run `deno repl` with allow flags.');
