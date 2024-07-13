@@ -2,7 +2,7 @@ import { join, toFileUrl } from '@std/path';
 import { parseArgs } from '@std/cli';
 import { existsSync } from '@std/fs';
 
-import { DxArgs } from './types.ts';
+import type { DxArgs } from './types.ts';
 
 const denoJsonFileNames: string[] = [
   'deno.json',

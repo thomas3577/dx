@@ -1,9 +1,9 @@
 {
   "name": "@dx/dx",
-  "version": "1.1.15",
+  "version": "1.1.16",
   "exports": "./mod.ts",
   "tasks": {
-    "lock": "deno cache --lock=deno.lock --lock-write ./*.ts",
+    "lock": "deno cache --lock=deno.lock ./*.ts",
     "test": "deno test --allow-read --allow-run --allow-sys --allow-env --coverage=./coverage",
     "test:cov": "deno coverage coverage --lcov ./coverage > ./coverage/lcov.info",
     "test:html": "deno coverage coverage --html",
@@ -18,7 +18,7 @@
     "@std/cli": "jsr:@std/cli@0.224",
     "@std/assert": "jsr:@std/assert@1",
     "@std/testing": "jsr:@std/testing@0.225",
-    "@dx/tano": "jsr:@dx/tano@0.4.21"
+    "@dx/tano": "jsr:@dx/tano@0.4.28"
   },
   "publish": {
     "exclude": [
@@ -30,17 +30,6 @@
       "*.code-workspace",
       "**/*.test.ts"
     ]
-  },
-  "lint": {
-    "rules": {
-      "tags": [
-        "recommended"
-      ],
-      "include": [
-        "ban-untagged-todo",
-        "no-deprecated-deno-api"
-      ]
-    }
   },
   "fmt": {
     "useTabs": false,
