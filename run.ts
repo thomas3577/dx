@@ -44,7 +44,7 @@ const run = async (args: string[], dryrun: boolean = false): Promise<number> => 
     stderr: 'piped',
   });
 
-  return await runCommand(command);
+  return await runner.runCommand(command);
 };
 
 export const runner = { run, runCommand };
