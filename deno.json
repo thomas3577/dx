@@ -1,6 +1,6 @@
 {
   "name": "@dx/dx",
-  "version": "1.1.18",
+  "version": "1.1.19",
   "exports": "./mod.ts",
   "tasks": {
     "lock": "deno cache ./*.ts",

@@ -1,6 +1,4 @@
-import deno from './deno.json' with { type: 'json' };
-
-export const VERSION = deno.version;
+import { VERSION } from './version.ts';
 
 export const printVersion = (): void => {
   console.log(`Deno version ${Deno.version.deno}`);

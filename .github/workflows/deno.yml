@@ -14,11 +14,11 @@ jobs:
       id-token: write
 
     steps:
-      - name: Setup repo
-        uses: actions/checkout@v4.1.1
+      - name: Checkout code
+        uses: actions/checkout@v4.1.7
 
       - name: Setup Deno
-        uses: denoland/setup-deno@v1
+        uses: denoland/setup-deno@v1.3.0
         with:
           deno-version: v1.45.5
 
@@ -33,3 +33,17 @@ jobs:
 
       - name: Publish package
         run: deno publish
+
+      - name: Create tag
+        run: deno run --allow-run .github/workflows/create_git_tag.ts
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: "Automated release for version ${{ github.ref }}"
+          draft: false
+          prerelease: false
