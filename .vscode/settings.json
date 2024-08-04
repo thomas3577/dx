@@ -1,0 +1,28 @@
+{
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.defaultFormatter": "denoland.vscode-deno",
+  "typescript.preferences.quoteStyle": "single",
+  "deno.lint": true,
+  "deno.enable": true,
+  "deno.config": "./deno.json",
+  "search.exclude": {
+    "**/deno.lock": true
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "cSpell.words": [
+    "deno",
+    "denoland",
+    "lcov",
+    "tano"
+  ]
+}
