@@ -3,7 +3,7 @@
   "version": "1.1.18",
   "exports": "./mod.ts",
   "tasks": {
-    "lock": "deno cache --lock=deno.lock ./*.ts",
+    "lock": "deno cache ./*.ts",
     "test": "deno test --allow-read --allow-run --allow-sys --allow-env --coverage=./coverage",
     "test:cov": "deno coverage coverage --lcov ./coverage > ./coverage/lcov.info",
     "test:html": "deno coverage coverage --html",
