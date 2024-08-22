@@ -4,15 +4,9 @@ const textDecoder = new TextDecoder();
 
 function git(args: string[]): string {
   const cmd = new Deno.Command('git', { args });
-  const output = cmd.outputSync();
-  const stderr = textDecoder.decode(output.stderr);
-  const stdout = textDecoder.decode(output.stdout);
+  const { stdout } = cmd.outputSync();
 
-  if (stderr) {
-    throw new Error(stderr);
-  }
-
-  return stdout;
+  return textDecoder.decode(stdout);
 }
 
 const latestTag = git(['describe', '--tags']);
