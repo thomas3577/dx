@@ -1,12 +1,22 @@
 import { VERSION } from '../../version.ts';
 
-async function git(command: string): Promise<Deno.CommandOutput> {
-  const cmd = new Deno.Command('git', {
-    args: [command],
-  });
+const textDecoder = new TextDecoder();
 
-  return await cmd.output();
+function git(args: string[]): string {
+  const cmd = new Deno.Command('git', { args });
+  const output = cmd.outputSync();
+  const stderr = textDecoder.decode(output.stderr);
+  const stdout = textDecoder.decode(output.stdout);
+
+  if (stderr) {
+    throw new Error(stderr);
+  }
+
+  return stdout;
 }
 
-await git(`tag -a ${VERSION} -m "Release ${VERSION}"`);
-await git(`push origin ${VERSION}`);
+const latestTag = git(['describe', '--tags']);
+if (latestTag.trim() !== VERSION) {
+  git(['tag', '-a', VERSION, '-m', `Release ${VERSION}`]);
+  git(['push', 'origin', VERSION]);
+}
