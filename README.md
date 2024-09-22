@@ -9,7 +9,7 @@ A Deno CLI for lazy typists.
 ## Install
 
 ```bash
-deno install --allow-read --allow-run --allow-sys --allow-env --allow-write --unstable-kv -g -n dx jsr:@dx/dx
+deno install --allow-run -RWES --unstable-kv -g -n dx jsr:@dx/dx
 ```
 
 ## Update
