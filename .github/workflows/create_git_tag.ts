@@ -10,7 +10,7 @@ function git(args: string[]): string {
 }
 
 const latestTag = git(['describe', '--tags']);
-if (latestTag.trim() !== VERSION) {
+if (!latestTag.trim().startsWith(VERSION)) {
   git(['tag', '-a', VERSION, '-m', `Release ${VERSION}`]);
   git(['push', 'origin', VERSION]);
 }
