@@ -8,10 +8,10 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v4.2.1
 
       - name: Create Release
         uses: actions/create-release@v1.1.4
@@ -20,6 +20,6 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body: "Automated release for version ${{ github.ref }}"
+          body: 'Automated release for version ${{ github.ref }}'
           draft: false
           prerelease: false

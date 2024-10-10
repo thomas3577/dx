@@ -26,20 +26,9 @@ export const getReserved = (): (string | undefined)[] => {
   const command = new Deno.Command(Deno.execPath(), { args: ['--help'] });
   const output: Deno.CommandOutput = command.outputSync();
   const outputArr: string[] = textDecoder.decode(output.stdout).trim().replace(/\r\n/g, '\n').split('\n');
-  let go = false;
 
   return outputArr
-    .filter((part) => {
-      if (part === 'Options:') {
-        go = false;
-        return false;
-      } else if (go) {
-        return true;
-      } else if (part === 'Commands:') {
-        go = true;
-        return false;
-      }
-    })
+    .filter((part) => part.startsWith('    ') && !part.startsWith('     '))
     .map((part) => part.trim().split(' ').at(0)?.trim())
     .filter((part) => part !== undefined && part.length > 0);
 };

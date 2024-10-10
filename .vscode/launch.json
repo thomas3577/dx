@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Test {file}",
+      "request": "launch",
+      "type": "node",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "test",
+        "--allow-run",
+        "-RSE",
+        "--inspect-brk",
+        "${file}"
+      ],
+      "cwd": "${workspaceFolder}",
+      "outputCapture": "std",
+      "attachSimplePort": 9229
+    },
+    {
+      "name": "Test all",
+      "request": "launch",
+      "type": "node",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "test",
+        "--allow-run",
+        "-RSE",
+        "--inspect-brk"
+      ],
+      "cwd": "${workspaceFolder}",
+      "outputCapture": "std",
+      "attachSimplePort": 9229
+    },
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "name": "@dx/dx",
-  "version": "1.1.22",
+  "version": "2.0.0",
   "license": "MIT",
   "exports": "./mod.ts",
   "tasks": {
@@ -16,7 +16,7 @@
     "@std/cli": "jsr:@std/cli@1.0.6",
     "@std/assert": "jsr:@std/assert@1.0.6",
     "@std/testing": "jsr:@std/testing@1.0.3",
-    "@dx/tano": "jsr:@dx/tano@0.4.35"
+    "@dx/tano": "jsr:@dx/tano@0.5.0"
   },
   "publish": {
     "exclude": [

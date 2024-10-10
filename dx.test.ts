@@ -145,11 +145,8 @@ Deno.test(`dx runs the commands...`, async () => {
     { args: ['install'], expected: ['dx > deno install'] },
     { args: ['bench'], expected: ['dx > deno bench'] },
     { args: ['bench', 'app.ts'], expected: ['dx > deno bench app.ts'] },
-    { args: ['cache'], expected: ['dx > deno cache'] },
     { args: ['check'], expected: ['dx > deno check'] },
     { args: ['lock'], expected: ['dx > deno task lock'] },
-    { args: ['lock'], expected: ['dx > deno task lock'] },
-    { args: ['eval'], expected: ['dx > deno eval'] },
     { args: ['eval'], expected: ['dx > deno eval'] },
     { args: ['app.ts'], expected: ['dx > deno run app.ts'] },
     { args: ['--check', 'app.ts'], expected: ['dx > deno run --check app.ts'] },
@@ -169,7 +166,7 @@ Deno.test(`dx runs the commands...`, async () => {
     const logSpy = spy(console, 'log');
     const actual: number | undefined = await dx(c.args);
 
-    assertEquals(actual, 0);
+    assertEquals(actual, 0, c.expected.at(1));
     assertSpyCall(logSpy, 0, { args: c.expected });
     assertSpyCalls(runCommandStub, 1);
 
