@@ -1,7 +1,7 @@
 {
   "version": "4",
   "specifiers": {
-    "jsr:@dx/tano@0.5.0": "0.5.0",
+    "jsr:@dx/tano@0.5.1": "0.5.1",
     "jsr:@std/assert@1.0.6": "1.0.6",
     "jsr:@std/assert@^1.0.6": "1.0.6",
     "jsr:@std/cli@1.0.6": "1.0.6",
@@ -21,8 +21,8 @@
     "jsr:@std/testing@1.0.3": "1.0.3"
   },
   "jsr": {
-    "@dx/tano@0.5.0": {
-      "integrity": "614020ad215ff45901ed715d5ac5f2fd3074011f97d1722712e03b0a28e009e7",
+    "@dx/tano@0.5.1": {
+      "integrity": "fcd13558d088b2c25b7b47abcd4e27de9ab438a38a64e52b28a16293d6ac503c",
       "dependencies": [
         "jsr:@std/cli",
         "jsr:@std/datetime",
@@ -91,7 +91,7 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@dx/tano@0.5.0",
+      "jsr:@dx/tano@0.5.1",
       "jsr:@std/assert@1.0.6",
       "jsr:@std/cli@1.0.6",
       "jsr:@std/fs@1.0.4",

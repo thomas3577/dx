@@ -1,18 +1,18 @@
 import { VERSION } from './version.ts';
 
 export const printVersion = (): void => {
-  console.log(`Deno version ${Deno.version.deno}`);
-  console.log(`ts version   ${Deno.version.typescript}`);
-  console.log(`V8 version   ${Deno.version.v8}`);
-  console.log(`%cdx version   ${VERSION}`, 'color: green; font-weight: bold');
+  console.log(`Deno version    ${Deno.version.deno}`);
+  console.log(`ts version      ${Deno.version.typescript}`);
+  console.log(`V8 version      ${Deno.version.v8}`);
+  console.log(`%c@dx/dx version   ${VERSION}`, 'color: green; font-weight: bold');
 };
 
 export const printHelp = (): void => {
   printVersion();
   console.log('\n');
-  console.log(`Usage: dx [COMMAND] [OPTIONS]`);
+  console.log(`Usage: @dx/dx [COMMAND] [OPTIONS]`);
   console.log('\nCommands:');
-  console.log('  update        Updates dx');
+  console.log('  upgrade       Upgrade @dx/dx');
   console.log('  init <NAME>   Extended init by name');
   console.log('  test          Runs tests');
   console.log('  fmt           Runs fmt');

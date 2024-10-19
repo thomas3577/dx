@@ -12,10 +12,10 @@ A Deno CLI for lazy typists.
 deno install --allow-run -RWES --unstable-kv -g -n dx jsr:@dx/dx
 ```
 
-## Update
+## Upgrade
 
 ```bash
-dx update
+dx upgrade
 ```
 
 ## Commands

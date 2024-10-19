@@ -57,8 +57,8 @@ export const dx = async (args?: string[]): Promise<number | undefined> => {
       return await runner.run(args, dryRun);
     }
 
-    // If command is 'update' then update/install dx cli
-    if (denoCommand === 'update') {
+    // If command is 'upgrade' then update/install @dx/dx cli
+    if (denoCommand === 'upgrade') {
       args = ['install', '--allow-read', '--allow-run', '--allow-sys', '--allow-env', '--allow-write', '--unstable-kv', '-g', '-f', '-n', 'dx', 'jsr:@dx/dx'];
       return await runner.run(args, dryRun);
     }
