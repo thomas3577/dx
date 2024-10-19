@@ -9,7 +9,7 @@
       "runtimeArgs": [
         "test",
         "--allow-run",
-        "-RSE",
+        "-RWESN",
         "--inspect-brk",
         "${file}"
       ],
@@ -25,7 +25,7 @@
       "runtimeArgs": [
         "test",
         "--allow-run",
-        "-RSE",
+        "-RWESN",
         "--inspect-brk"
       ],
       "cwd": "${workspaceFolder}",

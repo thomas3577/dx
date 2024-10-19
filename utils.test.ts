@@ -2,7 +2,7 @@ import { assertEquals } from '@std/assert';
 
 import { getCodeFilePathByName, getReserved, getTasks, isAcceptedFile, parseDxArgs } from './utils.ts';
 
-Deno.test('getReserved', async (t) => {
+Deno.test(getReserved.name, async (t) => {
   await t.step('should return an array of strings', () => {
     const actual = getReserved();
 
@@ -12,7 +12,7 @@ Deno.test('getReserved', async (t) => {
   });
 });
 
-Deno.test('getFilePathByName', async (t) => {
+Deno.test(getCodeFilePathByName.name, async (t) => {
   await t.step('should return a string', () => {
     const actual = getCodeFilePathByName('info');
 
@@ -27,7 +27,7 @@ Deno.test('getFilePathByName', async (t) => {
   });
 });
 
-Deno.test('getTasks', async (t) => {
+Deno.test(getTasks.name, async (t) => {
   await t.step('should return an array of strings', async () => {
     const actual = await getTasks();
 
@@ -39,7 +39,7 @@ Deno.test('getTasks', async (t) => {
   });
 });
 
-Deno.test('parseDxArgs', async (t) => {
+Deno.test(parseDxArgs.name, async (t) => {
   await t.step('should return an object', () => {
     const actual = parseDxArgs(['app.ts']);
 
@@ -47,7 +47,7 @@ Deno.test('parseDxArgs', async (t) => {
   });
 });
 
-Deno.test('isFileOrUrl', async (t) => {
+Deno.test(isAcceptedFile.name, async (t) => {
   await t.step('should return true', () => {
     const actual = isAcceptedFile('https://huberhaus.ch/file.ts');
 

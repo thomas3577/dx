@@ -1,5 +1,12 @@
 const textDecoder = new TextDecoder();
 
+/**
+ * Run a Deno command
+ *
+ * @param {Deno.Command} command - The command to run
+ *
+ * @returns {number} - The exit code of the command
+ */
 const runCommand = async (command: Deno.Command): Promise<number> => {
   const process: Deno.ChildProcess = command.spawn();
 
@@ -30,6 +37,14 @@ const runCommand = async (command: Deno.Command): Promise<number> => {
   return status.code;
 };
 
+/**
+ * Run a Deno command
+ *
+ * @param {string[]} args - Arguments to pass to the Deno command
+ * @param {boolean} dryrun - Whether to perform a dry run or not
+ *
+ * @returns {number} - The exit code of the command
+ */
 const run = async (args: string[], dryrun: boolean = false): Promise<number> => {
   console.log(`dx > deno ${args.join(' ')}`);
 
