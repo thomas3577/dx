@@ -2,6 +2,7 @@ import { internals } from './internals.ts';
 import { printHelp, printVersion } from './info.ts';
 import { runner } from './run.ts';
 import { getCodeFilePathByName, getReserved, getTasks, isAcceptedFile, parseDxArgs } from './utils.ts';
+import { upgradeDx } from './upgrade.ts';
 
 export const dx = async (args?: string[]): Promise<number | undefined> => {
   try {
@@ -59,8 +60,7 @@ export const dx = async (args?: string[]): Promise<number | undefined> => {
 
     // If command is 'upgrade' then update/install @dx/dx cli
     if (denoCommand === 'upgrade') {
-      args = ['install', '--allow-read', '--allow-run', '--allow-sys', '--allow-env', '--allow-write', '--unstable-kv', '-g', '-f', '-n', 'dx', 'jsr:@dx/dx'];
-      return await runner.run(args, dryRun);
+      return await upgradeDx(dryRun);
     }
 
     // If command is 'init' then create a new project (extended)
