@@ -4,7 +4,7 @@ export const printVersion = (): void => {
   console.log(`Deno version    ${Deno.version.deno}`);
   console.log(`ts version      ${Deno.version.typescript}`);
   console.log(`V8 version      ${Deno.version.v8}`);
-  console.log(`%c@dx/dx version   ${VERSION}`, 'color: green; font-weight: bold');
+  console.log(`%c@dx/dx version  ${VERSION}`, 'color: green; font-weight: bold');
 };
 
 export const printHelp = (): void => {

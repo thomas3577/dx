@@ -8,17 +8,27 @@ A Deno CLI for lazy typists.
 
 ## Install
 
+Installs the cli globally.
+
 ```bash
 deno install --allow-run -RWESN --unstable-kv -g -n dx jsr:@dx/dx
 ```
 
 ## Upgrade
 
+Upgrades the dx cli.
+
 ```bash
 dx upgrade
 ```
 
-## Commands
+## Help
+
+```bash
+dx --help
+```
+
+## Examples
 
 ### Run app
 
