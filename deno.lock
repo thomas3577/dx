@@ -1,9 +1,9 @@
 {
   "version": "4",
   "specifiers": {
-    "jsr:@dx/tano@~0.5.4": "0.5.4",
+    "jsr:@dx/tano@~0.5.5": "0.5.5",
     "jsr:@std/assert@^1.0.8": "1.0.8",
-    "jsr:@std/cli@1.0.6": "1.0.6",
+    "jsr:@std/cli@^1.0.7": "1.0.7",
     "jsr:@std/data-structures@^1.0.4": "1.0.4",
     "jsr:@std/datetime@0.225.2": "0.225.2",
     "jsr:@std/fmt@1.0.3": "1.0.3",
@@ -21,8 +21,8 @@
     "jsr:@std/testing@^1.0.5": "1.0.5"
   },
   "jsr": {
-    "@dx/tano@0.5.4": {
-      "integrity": "74984dd46b69309e22700980e28722750dadd4d13eb122920a5bf80c27cb22f2",
+    "@dx/tano@0.5.5": {
+      "integrity": "a27e8fd38f5937a35755c84c0c224a6dca87d45a52dec2804db495d8296a3853",
       "dependencies": [
         "jsr:@std/cli",
         "jsr:@std/datetime",
@@ -38,8 +38,8 @@
         "jsr:@std/internal"
       ]
     },
-    "@std/cli@1.0.6": {
-      "integrity": "d22d8b38c66c666d7ad1f2a66c5b122da1704f985d3c47f01129f05abb6c5d3d"
+    "@std/cli@1.0.7": {
+      "integrity": "98359df9df586a69015ba570305183b0cb9e7d53c05ea2016ef9a3e77e82c7cd"
     },
     "@std/data-structures@1.0.4": {
       "integrity": "fa0e20c11eb9ba673417450915c750a0001405a784e2a4e0c3725031681684a0"
@@ -101,9 +101,9 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@dx/tano@~0.5.4",
+      "jsr:@dx/tano@~0.5.5",
       "jsr:@std/assert@^1.0.8",
-      "jsr:@std/cli@1.0.6",
+      "jsr:@std/cli@^1.0.7",
       "jsr:@std/fs@^1.0.6",
       "jsr:@std/path@1.0.8",
       "jsr:@std/semver@^1.0.3",
