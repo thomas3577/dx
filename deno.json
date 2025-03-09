@@ -2,7 +2,7 @@
   "name": "@dx/dx",
   "version": "2.2.1",
   "license": "MIT",
-  "exports": "./mod.ts",
+  "exports": "./cli.ts",
   "tasks": {
     "lock": "deno cache ./*.ts",
     "test": "deno test --allow-run -RSE --coverage=./coverage",
