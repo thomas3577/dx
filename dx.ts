@@ -37,6 +37,11 @@ export const dx = async (args?: string[]): Promise<number | undefined> => {
     const denoCommand: string = args[denoCommandIndex];
     const denoCommandArgs: string[] = args.slice(0, denoCommandIndex);
 
+    // If command is 'upgrade' then update/install @dx/dx cli
+    if (denoCommand === 'upgrade') {
+      return await upgradeDx(dryRun);
+    }
+
     // Check if the command is a file
     if (isAcceptedFile(denoCommand)) {
       args.unshift('run');
@@ -56,11 +61,6 @@ export const dx = async (args?: string[]): Promise<number | undefined> => {
     if (filePath) {
       args = ['run', ...denoCommandArgs, filePath, ...appsArgs];
       return await runner.run(args, dryRun);
-    }
-
-    // If command is 'upgrade' then update/install @dx/dx cli
-    if (denoCommand === 'upgrade') {
-      return await upgradeDx(dryRun);
     }
 
     // If command is 'init' then create a new project (extended)
