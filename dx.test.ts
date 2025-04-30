@@ -146,7 +146,6 @@ Deno.test(`dx runs the commands...`, async () => {
     { args: ['bench'], expected: ['dx > deno bench'] },
     { args: ['bench', 'app.ts'], expected: ['dx > deno bench app.ts'] },
     { args: ['check'], expected: ['dx > deno check'] },
-    { args: ['lock'], expected: ['dx > deno task lock'] },
     { args: ['eval'], expected: ['dx > deno eval'] },
     { args: ['app.ts'], expected: ['dx > deno run app.ts'] },
     { args: ['--check', 'app.ts'], expected: ['dx > deno run --check app.ts'] },

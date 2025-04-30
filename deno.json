@@ -1,10 +1,9 @@
 {
   "name": "@dx/dx",
-  "version": "2.2.3",
+  "version": "2.3.0",
   "license": "MIT",
   "exports": "./cli.ts",
   "tasks": {
-    "lock": "deno cache ./*.ts",
     "test": "deno test --allow-run -RSE --coverage=./coverage",
     "test:cov": "deno coverage coverage --lcov ./coverage > ./coverage/lcov.info",
     "test:html": "deno coverage coverage --html",
@@ -12,11 +11,11 @@
     "update": "deno outdated --update --latest"
   },
   "imports": {
-    "@dx/tano": "jsr:@dx/tano@^0.5.13",
+    "@dx/tano": "jsr:@dx/tano@^0.5.14",
     "@std/assert": "jsr:@std/assert@^1.0.12",
     "@std/cli": "jsr:@std/cli@^1.0.16",
     "@std/fs": "jsr:@std/fs@^1.0.16",
-    "@std/path": "jsr:@std/path@1.0.8",
+    "@std/path": "jsr:@std/path@1.0.9",
     "@std/semver": "jsr:@std/semver@^1.0.5",
     "@std/testing": "jsr:@std/testing@^1.0.11"
   },

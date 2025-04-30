@@ -34,8 +34,8 @@ Deno.test(getTasks.name, async (t) => {
     assertEquals(typeof actual, 'object');
     assertEquals(Array.isArray(actual), true);
     assertEquals(actual.length > 0, true);
-    assertEquals(actual.at(0), 'lock');
-    assertEquals(actual.at(1), 'test');
+    assertEquals(actual.at(0), 'test');
+    assertEquals(actual.at(1), 'test:cov');
   });
 });
 
