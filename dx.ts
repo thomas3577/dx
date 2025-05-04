@@ -23,6 +23,10 @@ export const dx = async (args?: string[]): Promise<number | undefined> => {
 
     const tasks: string[] = await getTasks();
 
+    if (!args) {
+      args = [];
+    }
+
     // If you accidentally enter the command 'run', it should be removed.
     if (args.length > 1 && args.at(0) === 'run' && args.findLastIndex((arg: string) => !arg.startsWith('-')) > 0) {
       args.shift();

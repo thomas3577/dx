@@ -24,7 +24,6 @@ export const getLatestVersion = async (): Promise<SemVer> => {
 /**
  * Upgrade the @dx/dx library to the latest version
  *
- * @param {string} currVersion - Current version of the library
  * @param {boolean} dryRun - Whether to perform a dry run or not
  *
  * @returns {number} - The exit code of the command
