@@ -1,4 +1,4 @@
-import { format, greaterThan, parse } from '@std/semver';
+import { equals, format, parse } from '@std/semver';
 import type { SemVer } from '@std/semver';
 
 import { runner } from './run.ts';
@@ -32,7 +32,7 @@ export const upgradeDx = async (dryRun: boolean = true): Promise<number> => {
   const currentDxVersion: SemVer = parse(VERSION);
   const latestDxVersion: SemVer = await getLatestVersion();
 
-  if (!greaterThan(latestDxVersion, currentDxVersion)) {
+  if (!equals(latestDxVersion, currentDxVersion)) {
     console.log(`%cYou are using the latest version: ${format(latestDxVersion)}`, 'color: green; font-weight: bold');
     return 0;
   }

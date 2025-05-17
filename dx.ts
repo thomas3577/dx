@@ -4,7 +4,7 @@ import { runner } from './run.ts';
 import { getCodeFilePathByName, getReserved, getTasks, isAcceptedFile, parseDxArgs } from './utils.ts';
 import { upgradeDx } from './upgrade.ts';
 
-export const dx = async (args?: string[]): Promise<number | undefined> => {
+export const dx = async (args?: string[]): Promise<number> => {
   try {
     const parsedArgs = parseDxArgs(args);
     const dryRun: boolean = parsedArgs['dry-run'];
@@ -79,7 +79,6 @@ export const dx = async (args?: string[]): Promise<number | undefined> => {
     return await runner.run(args, dryRun);
   } catch (err: unknown) {
     if (err instanceof Error) {
-      // cspell:disable
       console.error(`%cerror: %c${err.message}`, 'color: red', 'color: white');
     }
 
